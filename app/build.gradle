@@ -13,7 +13,7 @@ android {
         manifestPlaceholders = [
                 GETUI_APP_ID : "lVCSiAwQRT79UUZPemnPK4",
                 GETUI_APP_KEY : "zi4Jk8s4u18U4KncVcLw7A",
-                GETUI_APP_SECRET : "US6z2w89aR8SxBJBtq0OL1"
+                GETUI_APP_SECRET : "E0MI10GFjU6kOEVGxhfa05"
         ]
     }
     buildTypes {
@@ -34,4 +34,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':ViewPreference')
     compile files('libs/GetuiSDK2.12.1.0.jar')
+    compile files('libs/json_simple-1.1.jar')
 }

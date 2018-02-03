@@ -48,6 +48,18 @@
                 app:Title="Heating"/>
 
         </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
+        <com.lulingfeng.viewpreference.CardCategoryPreferenceView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#afb4db"
+            app:Title="DeviceData"
+            >
+            <com.lulingfeng.viewpreference.PreferenceItemView
+                android:id="@+id/id_device_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
     </LinearLayout>
 
 </FrameLayout>
