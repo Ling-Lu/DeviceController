@@ -104,6 +104,10 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
             tryCommit(mEditor);
         }
     }
+    public String getValue() {
+        onClick(null);
+        return mText;
+    }
     @Override
     public void onClick(View v) {
         String text = mEditText.getText().toString();
