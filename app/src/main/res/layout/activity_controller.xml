@@ -6,63 +6,73 @@
     android:layout_height="match_parent"
     tools:context="com.lulingfeng.devicecontroller.ControllerActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.lulingfeng.viewpreference.CardCategoryPreferenceView
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:Title="Orders">
+            android:orientation="vertical">
 
-            <com.lulingfeng.viewpreference.SwitchPreferenceView
+            <com.lulingfeng.viewpreference.CardCategoryPreferenceView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/id_switch"
-                app:Title="power"/>
-            <com.lulingfeng.viewpreference.EditPreferenceView
-                android:id="@+id/id_temperature_changed"
+                app:Title="Orders">
+
+                <com.lulingfeng.viewpreference.SwitchPreferenceView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_switch"
+                    app:Title="power"/>
+                <com.lulingfeng.viewpreference.EditPreferenceView
+                    android:id="@+id/id_temperature_changed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:Key="pre_temperature_changed"
+                    app:Title="Set temperature"/>
+                <com.lulingfeng.viewpreference.EditPreferenceView
+                    android:id="@+id/id_client_id_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:Key="pre_client_set"
+                    app:Title="Set client id"/>
+
+            </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
+
+            <com.lulingfeng.viewpreference.CardCategoryPreferenceView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:Key="pre_temperature_changed"
-                app:Title="changed temperature send"/>
+                app:Title="Remote device state">
 
-        </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
+                <com.lulingfeng.viewpreference.PreferenceItemView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_temperature"
+                    app:Summary="0"
+                    app:Title="temperature"/>
+                <com.lulingfeng.viewpreference.PreferenceItemView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_gear"
+                    app:Title="Heating"
+                    app:Summary="off"/>
 
-        <com.lulingfeng.viewpreference.CardCategoryPreferenceView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:Title="Remote device state">
-
-            <com.lulingfeng.viewpreference.PreferenceItemView
+            </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
+            <com.lulingfeng.viewpreference.CardCategoryPreferenceView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/id_temperature"
-                app:Summary="0"
-                app:Title="temperature"/>
-            <com.lulingfeng.viewpreference.PreferenceItemView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/id_gear"
-                app:Title="Heating"
-                app:Summary="off"/>
+                android:background="#33afb4db"
+                app:Title="Local DeviceData"
+                >
+                <com.lulingfeng.viewpreference.PreferenceItemView
+                    android:id="@+id/id_device_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:Title="Client ID"
+                    app:Summary="(none)"/>
 
-        </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
-        <com.lulingfeng.viewpreference.CardCategoryPreferenceView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#88afb4db"
-            app:Title="Local DeviceData"
-            >
-            <com.lulingfeng.viewpreference.PreferenceItemView
-                android:id="@+id/id_device_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:Title="Client ID"
-                app:Summary="(none)"/>
-
-        </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
-    </LinearLayout>
+            </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

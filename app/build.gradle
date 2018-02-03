@@ -35,4 +35,9 @@ dependencies {
     compile project(':ViewPreference')
     compile files('libs/GetuiSDK2.12.1.0.jar')
     compile files('libs/json_simple-1.1.jar')
+    compile files('libs/gexin-rp-fastjson-1.0.0.1.jar')
+    compile files('libs/gexin-rp-sdk-base-4.0.0.22.jar')
+    compile files('libs/gexin-rp-sdk-http-4.0.1.17.jar')
+    compile files('libs/gexin-rp-sdk-template-4.0.0.16.jar')
+    compile files('libs/protobuf-java-2.5.0.jar')
 }

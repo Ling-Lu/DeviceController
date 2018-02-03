@@ -21,12 +21,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ControllerActivity extends AppCompatActivity implements PreferenceItemView.OnPreferenceChangedListener,DeviceControllerApplication.OnDataReceiveListener{
     private final static String TAG = ControllerActivity.class.getSimpleName();
     private static final int REQUEST_PERMISSION = 0;
     private SwitchPreferenceView mVPowerSwitch;
     private EditPreferenceView mVChangeTemperature;
+    private EditPreferenceView mVChangeClientId;
     private PreferenceItemView mVTemperature;
     private PreferenceItemView mVClientId;
     private PreferenceItemView mVCurrentGear;
@@ -95,6 +98,7 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
     private void initViews() {
         mVPowerSwitch = (SwitchPreferenceView) findViewById(R.id.id_switch);
         mVChangeTemperature = (EditPreferenceView) findViewById(R.id.id_temperature_changed);
+        mVChangeClientId = (EditPreferenceView) findViewById(R.id.id_client_id_set);
         mVTemperature = (PreferenceItemView) findViewById(R.id.id_temperature);
         mVCurrentGear = (PreferenceItemView) findViewById(R.id.id_gear);
         mVClientId = (PreferenceItemView) findViewById(R.id.id_device_data);
@@ -137,7 +141,12 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
     }
     @Override
     public boolean onPreferenceChange(PreferenceItemView preferenceItemView, Object newValue) {
-        return false;
+        Map<String,Object> mData = new HashMap<>();
+        mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR,((boolean)newValue)? 60 : 0);
+        mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,mVChangeTemperature.getValue());
+        JSONObject jsonObject = new JSONObject(mData);
+        SendSingleMessage.sendMsg(mAppId,mAppKey,mVChangeClientId.getValue(),jsonObject.toString());
+        return true;
     }
 
     @Override
@@ -149,7 +158,6 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
     public void onReceiveTransmissionData(String data) {
         try {
             JSONObject jsonObject = new JSONObject(data);
-            String switchState = jsonObject.getString(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE);
             int current_temperature = jsonObject.getInt(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE);
             int current_gear = jsonObject.getInt(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR);
 

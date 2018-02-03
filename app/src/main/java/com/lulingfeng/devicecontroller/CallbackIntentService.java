@@ -23,7 +23,7 @@ import com.igexin.sdk.message.UnBindAliasCmdMessage;
  * onReceiveCommandResult 各种事件处理理回执 <br>
  */
 public class CallbackIntentService extends GTIntentService {
-    private static final String TAG = "GetuiSdkDemo";
+    private static final String TAG = CallbackIntentService.class.getSimpleName();
 
     /**
      * 为了观察透传数据变化.
