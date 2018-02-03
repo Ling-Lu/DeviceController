@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="preference_min_height">65dp</dimen>
+    <dimen name="preference_padding_top">6dp</dimen>
+    <dimen name="preference_margin_end">15dp</dimen>
+    <dimen name="preference_margin_start">15dp</dimen>
+    <dimen name="preference_icon_size">30dp</dimen>
+    <dimen name="preference_edit_size">35dp</dimen>
+    <dimen name="preference_icon_margin_start">10dp</dimen>
+    <dimen name="preference_icon_margin_end">10dp</dimen>
+    <dimen name="preference_preview_size">30dp</dimen>
+    <dimen name="preference_preview_margin_end">10dp</dimen>
+    <dimen name="preference_category_margin_top">6dp</dimen>
+    <dimen name="preference_category_margin_bottom">3dp</dimen>
+    <dimen name="preference_summary_width">210dp</dimen>
+    <dimen name="preference_card_view_margins">15dp</dimen>
+</resources>

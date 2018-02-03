@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name" translatable="false">EdgeLighting</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_permissions">Permissions</string>
+    <string name="title_master_switch">Switch</string>
+    <string name="title_show_on_top">Show on the top</string>
+    <string name="title_access_notification">Access notification</string>
+    <string name="title_advance">Advance</string>
+    <string name="title_rounded_corner">Rounded corner</string>
+    <string name="title_corner_size">Corner size</string>
+    <string name="title_edge_lighting">Edge Lighting</string>
+    <string name="title_lighting_size">Lighting Size</string>
+    <string name="title_lighting_color">Lighting Color</string>
+    <string name="title_lighting_mixed_color">Lighting Mixed Color</string>
+    <string name="summary_rounded_corner_recommended">Rounded corner 30 recommended</string>
+    <string name="summary_lighting_size_recommended"> 10 recommended</string>
+    <string name="summary_lighting_color">Change your edge lighting color</string>
+    <string name="summary_lighting_mixed_color">Change your color mixed with edge lighting color</string>
+    <string name="toast_invalid_number">Invalid number , Please input positive integer less than 50</string>
+
+    <string name="key_master_switch" translatable="false">key_switch</string>
+    <string name="key_show_on_top" translatable="false">key_show_on_top</string>
+    <string name="key_access_notification" translatable="false">key_access_notification</string>
+    <string name="key_rounded_corner">key_rounded_corner</string>
+    <string name="key_lighting_size">key_lighting_size</string>
+    <string name="key_lighting_color">key_lighting_color</string>
+    <string name="key_lighting_mixed_color">key_lighting_mixed_color</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="toast_thanks">Thank you!</string>
+    <string name="toast_thanks_rate">Thanks you! Please rate the app on play store :)</string>
+    <string name="settings_turn_over_lighting">Edge lighting</string>
+    <string name="enable">Enable</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="remove">Remove</string>
+    <string name="settings_subappbar_switch_on">On</string>
+    <string name="settings_subappbar_switch_off">Off</string>
+    <string name="vivid">Vivid</string>
+    <string name="warm">Warm</string>
+    <string name="cool">Cool</string>
+    <string name="serene">Serene</string>
+    <string name="tint">Tint</string>
+    <string name="gray">Greyscale</string>
+    <string name="posterize">Posterise</string>
+    <string name="ripple">Ripple</string>
+    <string name="people_permission_noti_setting">Settings</string>
+    <string name="settings_handle_size">Size</string>
+    <string name="settings_handle_transparency">Transparency</string>
+    <string name="settings_help">Help</string>
+    <string name="wifi_ap_qr_code_share">Share</string>
+    <string name="quick_settings_brightness_label">Brightness</string>
+    <string name="sview_led_cover_caller_id_type_gift">Gift</string>
+    <string name="transparency_text">Transparency</string>
+    <string name="color_title">Color</string>
+    <string name="edge_lighting">Edge Lighting</string>
+    <string name="more_settings_title">More</string>
+    <string name="settings_edit">Edit</string>
+    <string name="settings_wallpaper_blur">Wallpaper Blur</string>
+    <string name="favourites">Favourites</string>
+    <string name="settings_rate">Rate Us</string>
+    <string name="pen_air_view_additional_feedback_title">Feedback</string>
+    <string name="ringtone_title">Ringtone</string>
+    <string name="theme_settings">Themes</string>
+    <string name="downloaded">Downloaded</string>
+    <string name="folder_color_blue">blue</string>
+    <string name="folder_color_grey">grey</string>
+    <string name="folder_color_red">red</string>
+    <string name="folder_color_yellow">yellow</string>
+    <string name="folder_color_green">green</string>
+</resources>

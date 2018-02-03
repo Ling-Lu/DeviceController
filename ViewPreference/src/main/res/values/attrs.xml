@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PreferenceView">
+        <attr name="Title" format="string"/>
+        <attr name="Summary" format="string" />
+        <attr name="Key" format="string" />
+        <attr name="DefaultValue" format="boolean|string|reference|integer|dimension" />
+        <attr name="Margins" format="dimension" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lulingfeng.devicecontroller.ControllerActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.lulingfeng.viewpreference.CardCategoryPreferenceView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:Title="orders">
+
+            <com.lulingfeng.viewpreference.SwitchPreferenceView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/id_switch"
+                app:Title="power"/>
+            <com.lulingfeng.viewpreference.EditPreferenceView
+                android:id="@+id/id_temperature_changed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:Key="pre_temperature_changed"
+                app:Title="changed temperature send"/>
+
+        </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
+
+        <com.lulingfeng.viewpreference.CardCategoryPreferenceView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:Title="device state">
+
+            <com.lulingfeng.viewpreference.PreferenceItemView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/id_temperature"
+                app:Summary="0"
+                app:Title="temperature"/>
+            <com.lulingfeng.viewpreference.SwitchPreferenceView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/id_working"
+                app:Title="Heating"/>
+
+        </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
+    </LinearLayout>
+
+</FrameLayout>
