@@ -48,6 +48,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
+        <EditText android:id="@+id/id_pre_edit"
+            style="@style/PreferenceSummary"
+            android:maxLines="3"
+            android:maxWidth="@dimen/preference_summary_width"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/preference_edit_size"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -77,14 +85,6 @@
             app:bsb_section_text_position="below_section_mark"
             app:bsb_track_color="@android:color/holo_blue_light"
             app:bsb_second_track_color="@android:color/holo_orange_light"/>
-        <EditText
-            android:id="@+id/id_pre_edit"
-            android:layout_width="@dimen/preference_edit_size"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:selectAllOnFocus="true"
-            android:digits="0123456789"
-            android:visibility="gone"/>
         <FrameLayout android:id="@+id/id_pre_preview"
             android:background="@color/colorAccent"
             android:layout_marginRight="@dimen/preference_preview_margin_end"
@@ -94,9 +94,15 @@
             android:visibility="gone"
             />
         <Switch android:id="@+id/id_pre_switch"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/preference_button_width"
             android:layout_height="wrap_content"
             android:visibility="gone"
             />
+        <Button android:id="@+id/id_pre_btn_set"
+            android:layout_width="@dimen/preference_button_width"
+            android:layout_height="wrap_content"
+            android:text="@string/button_set"
+            android:background="?android:attr/selectableItemBackground"
+            android:visibility="gone"/>
     </LinearLayout>
 </RelativeLayout>

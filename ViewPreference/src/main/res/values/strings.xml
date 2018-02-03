@@ -68,4 +68,6 @@
     <string name="folder_color_red">red</string>
     <string name="folder_color_yellow">yellow</string>
     <string name="folder_color_green">green</string>
+
+    <string name="button_set">Set</string>
 </resources>
