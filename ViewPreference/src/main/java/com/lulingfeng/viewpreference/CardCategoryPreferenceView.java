@@ -1,7 +1,6 @@
 package com.lulingfeng.viewpreference;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -18,7 +17,7 @@ public class CardCategoryPreferenceView extends CardView {
     private final static String TAG = CardCategoryPreferenceView.class.getSimpleName();
     PreferenceCategoryView mContent;
     CardView mCardView;
-    List<Integer> mChilds = new ArrayList<>();
+    List<Integer> mChildren = new ArrayList<>();
     LayoutParams mLayoutParams;
     int mMargins = 0;
     public CardCategoryPreferenceView(Context context) {
@@ -40,8 +39,8 @@ public class CardCategoryPreferenceView extends CardView {
         mMargins = (int) getResources().getDimension(R.dimen.preference_card_view_margins);
         mLayoutParams = (LayoutParams) new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         mLayoutParams.setMargins(mMargins, mMargins, mMargins, mMargins);
-        mChilds.add(mCardView.getId());
-        mChilds.add(mContent.getId());
+        mChildren.add(mCardView.hashCode());
+        mChildren.add(mContent.hashCode());
 
         addView(mCardView,mLayoutParams);
         mCardView.addView(mContent);
@@ -61,8 +60,8 @@ public class CardCategoryPreferenceView extends CardView {
     public void onViewAdded(View child) {
         super.onViewAdded(child);
         Log.d(TAG, "onViewAdded: ");
-        if(child.getId() != mContent.getId()) {
-            if(mChilds.contains(child.getId()) == false) {
+        if(child.hashCode() != mContent.hashCode()) {
+            if(mChildren.contains(child.hashCode()) == false) {
                 removeView(child);
                 mContent.addView(child);
             }
