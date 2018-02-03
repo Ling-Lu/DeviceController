@@ -14,7 +14,7 @@
         <com.lulingfeng.viewpreference.CardCategoryPreferenceView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:Title="orders">
+            app:Title="Orders">
 
             <com.lulingfeng.viewpreference.SwitchPreferenceView
                 android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
         <com.lulingfeng.viewpreference.CardCategoryPreferenceView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:Title="device state">
+            app:Title="Remote device state">
 
             <com.lulingfeng.viewpreference.PreferenceItemView
                 android:layout_width="wrap_content"
@@ -41,23 +41,26 @@
                 android:id="@+id/id_temperature"
                 app:Summary="0"
                 app:Title="temperature"/>
-            <com.lulingfeng.viewpreference.SwitchPreferenceView
+            <com.lulingfeng.viewpreference.PreferenceItemView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/id_working"
-                app:Title="Heating"/>
+                android:id="@+id/id_gear"
+                app:Title="Heating"
+                app:Summary="off"/>
 
         </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
         <com.lulingfeng.viewpreference.CardCategoryPreferenceView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#afb4db"
-            app:Title="DeviceData"
+            android:background="#88afb4db"
+            app:Title="Local DeviceData"
             >
             <com.lulingfeng.viewpreference.PreferenceItemView
                 android:id="@+id/id_device_data"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:Title="Client ID"
+                app:Summary="(none)"/>
 
         </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
     </LinearLayout>

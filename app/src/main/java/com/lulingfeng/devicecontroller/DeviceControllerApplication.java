@@ -15,6 +15,7 @@ public class DeviceControllerApplication extends Application {
     private static final String TAG = "GetuiSdkDemo";
 
     private static Handler mHandler;
+    private static OnDataReceiveListener mOnDataReceiveListener;
     public static GetuiSdkDemoActivity demoActivity;
 
     /**
@@ -28,7 +29,7 @@ public class DeviceControllerApplication extends Application {
         Log.d(TAG, "DemoApplication onCreate");
 
         if (mHandler == null) {
-            mHandler = new DemoHandler();
+            mHandler = new MessageDispatchHandler();
         }
     }
 
@@ -36,7 +37,7 @@ public class DeviceControllerApplication extends Application {
         mHandler.sendMessage(msg);
     }
 
-    public static class DemoHandler extends Handler {
+    public class MessageDispatchHandler extends Handler {
 
         @Override
         public void handleMessage(Message msg) {
@@ -45,10 +46,13 @@ public class DeviceControllerApplication extends Application {
                     if (demoActivity != null) {
                         payloadData.append((String) msg.obj);
                         payloadData.append("\n");
-                    Log.d(TAG, "handleMessage: payloadData" + payloadData);
+                        Log.d(TAG, "handleMessage: payloadData" + payloadData);
                         if (GetuiSdkDemoActivity.tLogView != null) {
                             GetuiSdkDemoActivity.tLogView.append(msg.obj + "\n");
                         }
+                    }
+                    if(mOnDataReceiveListener != null) {
+                        mOnDataReceiveListener.onReceiveTransmissionData((String) msg.obj);
                     }
                     break;
 
@@ -58,8 +62,18 @@ public class DeviceControllerApplication extends Application {
                             GetuiSdkDemoActivity.tView.setText((String) msg.obj);
                         }
                     }
+                    if(mOnDataReceiveListener != null) {
+                        mOnDataReceiveListener.onReceiveClientId((String) msg.obj);
+                    }
                     break;
             }
         }
+    }
+    public static void registerDataReceiveListener(OnDataReceiveListener onDataReceiveListener) {
+        mOnDataReceiveListener = onDataReceiveListener;
+    }
+    public interface OnDataReceiveListener{
+        void onReceiveClientId(String cid);
+        void onReceiveTransmissionData(String data);
     }
 }

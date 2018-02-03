@@ -17,15 +17,19 @@ import com.lulingfeng.viewpreference.EditPreferenceView;
 import com.lulingfeng.viewpreference.PreferenceItemView;
 import com.lulingfeng.viewpreference.SwitchPreferenceView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 
-public class ControllerActivity extends AppCompatActivity implements PreferenceItemView.OnPreferenceChangedListener{
+public class ControllerActivity extends AppCompatActivity implements PreferenceItemView.OnPreferenceChangedListener,DeviceControllerApplication.OnDataReceiveListener{
     private final static String TAG = ControllerActivity.class.getSimpleName();
     private static final int REQUEST_PERMISSION = 0;
-    private SwitchPreferenceView mPowerSwitch;
-    private EditPreferenceView mChangeTemperature;
-    private PreferenceItemView mTemperature;
-    private SwitchPreferenceView mWorkingSwitch;
+    private SwitchPreferenceView mVPowerSwitch;
+    private EditPreferenceView mVChangeTemperature;
+    private PreferenceItemView mVTemperature;
+    private PreferenceItemView mVClientId;
+    private PreferenceItemView mVCurrentGear;
     private String mAppKey = "";
     private String mAppSecret = "";
     private String mAppId = "";
@@ -36,6 +40,7 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
         initViews();
         parseManifests();
         initPermissions();
+        initListener();
 
         // cpu 架构
         Log.d(TAG, "cpu arch = " + (Build.VERSION.SDK_INT < 21 ? Build.CPU_ABI : Build.SUPPORTED_ABIS[0]));
@@ -43,6 +48,12 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
         // 检查 so 是否存在
         File file = new File(this.getApplicationInfo().nativeLibraryDir + File.separator + "libgetuiext2.so");
         Log.e(TAG, "libgetuiext2.so exist = " + file.exists());
+
+
+    }
+    private void initListener() {
+        DeviceControllerApplication.registerDataReceiveListener(this);
+
 
         // com.getui.demo.DemoPushService 为第三⽅方⾃自定义推送服务
         PushManager.getInstance().initialize(this.getApplicationContext(), DeviceControllerPushService.class);
@@ -82,12 +93,13 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
         }
     }
     private void initViews() {
-        mPowerSwitch = (SwitchPreferenceView) findViewById(R.id.id_switch);
-        mChangeTemperature = (EditPreferenceView) findViewById(R.id.id_temperature_changed);
-        mTemperature = (PreferenceItemView) findViewById(R.id.id_temperature);
-        mWorkingSwitch = (SwitchPreferenceView) findViewById(R.id.id_working);
+        mVPowerSwitch = (SwitchPreferenceView) findViewById(R.id.id_switch);
+        mVChangeTemperature = (EditPreferenceView) findViewById(R.id.id_temperature_changed);
+        mVTemperature = (PreferenceItemView) findViewById(R.id.id_temperature);
+        mVCurrentGear = (PreferenceItemView) findViewById(R.id.id_gear);
+        mVClientId = (PreferenceItemView) findViewById(R.id.id_device_data);
 
-        mPowerSwitch.setOnPreferenceChangeListener(this);
+        mVPowerSwitch.setOnPreferenceChangeListener(this);
     }
     private void parseManifests() {
         String packageName = getApplicationContext().getPackageName();
@@ -126,5 +138,25 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
     @Override
     public boolean onPreferenceChange(PreferenceItemView preferenceItemView, Object newValue) {
         return false;
+    }
+
+    @Override
+    public void onReceiveClientId(String cid) {
+        mVClientId.setSummary(cid);
+    }
+
+    @Override
+    public void onReceiveTransmissionData(String data) {
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            String switchState = jsonObject.getString(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE);
+            int current_temperature = jsonObject.getInt(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE);
+            int current_gear = jsonObject.getInt(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR);
+
+            mVCurrentGear.setSummary(String.valueOf(current_gear));
+            mVTemperature.setSummary(String.valueOf(current_temperature));
+        } catch (JSONException e) {
+            Log.e(TAG, "OnReceiveTransmissionData: getJsonData error", e);
+        }
     }
 }
