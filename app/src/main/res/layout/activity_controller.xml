@@ -23,19 +23,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/id_switch"
+                    app:Key="key_power_set"
                     app:Title="power"/>
                 <com.lulingfeng.viewpreference.EditPreferenceView
                     android:id="@+id/id_temperature_changed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:Key="pre_temperature_changed"
-                    app:Title="Set temperature"/>
+                    app:Title="Set temperature"
+                    app:DefaultValue="25"/>
+                <com.lulingfeng.viewpreference.EditPreferenceView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_gear_set"
+                    app:Title="Set Heating Gear"
+                    app:Key="ke_gear_set"
+                    app:DefaultValue="80"
+                    />
                 <com.lulingfeng.viewpreference.EditPreferenceView
                     android:id="@+id/id_client_id_set"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:Key="pre_client_set"
-                    app:Title="Set client id"/>
+                    app:Title="Set client id"
+                    app:DefaultValue="(none)"/>
 
             </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
 
@@ -44,6 +55,12 @@
                 android:layout_height="wrap_content"
                 app:Title="Remote device state">
 
+                <com.lulingfeng.viewpreference.SwitchPreferenceView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_power"
+                    app:Title="Power"
+                    app:Summary="off"/>
                 <com.lulingfeng.viewpreference.PreferenceItemView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -54,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/id_gear"
-                    app:Title="Heating"
+                    app:Title="Heating Gear"
                     app:Summary="off"/>
 
             </com.lulingfeng.viewpreference.CardCategoryPreferenceView>

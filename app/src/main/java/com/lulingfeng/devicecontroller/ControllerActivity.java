@@ -15,6 +15,7 @@ import android.util.Log;
 import com.igexin.sdk.PushManager;
 import com.lulingfeng.viewpreference.EditPreferenceView;
 import com.lulingfeng.viewpreference.PreferenceItemView;
+import com.lulingfeng.viewpreference.SeekPreferenceView;
 import com.lulingfeng.viewpreference.SwitchPreferenceView;
 
 import org.json.JSONException;
@@ -30,7 +31,9 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
     private SwitchPreferenceView mVPowerSwitch;
     private EditPreferenceView mVChangeTemperature;
     private EditPreferenceView mVChangeClientId;
+    private EditPreferenceView mVChangeGear;
     private PreferenceItemView mVTemperature;
+    private SwitchPreferenceView mVPower;
     private PreferenceItemView mVClientId;
     private PreferenceItemView mVCurrentGear;
     private String mAppKey = "";
@@ -99,11 +102,17 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
         mVPowerSwitch = (SwitchPreferenceView) findViewById(R.id.id_switch);
         mVChangeTemperature = (EditPreferenceView) findViewById(R.id.id_temperature_changed);
         mVChangeClientId = (EditPreferenceView) findViewById(R.id.id_client_id_set);
+        mVChangeGear = (EditPreferenceView) findViewById(R.id.id_gear_set);
         mVTemperature = (PreferenceItemView) findViewById(R.id.id_temperature);
         mVCurrentGear = (PreferenceItemView) findViewById(R.id.id_gear);
+        mVPower = (SwitchPreferenceView) findViewById(R.id.id_power);
         mVClientId = (PreferenceItemView) findViewById(R.id.id_device_data);
 
+        mVPower.setEnabled(false);
         mVPowerSwitch.setOnPreferenceChangeListener(this);
+        mVChangeClientId.setOnPreferenceChangeListener(this);
+        mVChangeTemperature.setOnPreferenceChangeListener(this);
+        mVChangeGear.setOnPreferenceChangeListener(this);
     }
     private void parseManifests() {
         String packageName = getApplicationContext().getPackageName();
@@ -142,8 +151,28 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
     @Override
     public boolean onPreferenceChange(PreferenceItemView preferenceItemView, Object newValue) {
         Map<String,Object> mData = new HashMap<>();
-        mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR,((boolean)newValue)? 60 : 0);
-        mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,mVChangeTemperature.getValue());
+        String key = preferenceItemView.getKey();
+        if(key == null) return false;
+        if(key.equals(mVChangeClientId.getKey())) {
+            mData.put(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE,mVPowerSwitch.isChecked());
+            mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR,mVChangeGear.getValue());
+            mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,mVChangeTemperature.getValue());
+        }
+        if(key.equals(mVChangeGear.getKey())) {
+            mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR,newValue);
+        } else {
+            mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR,mVChangeGear.getValue());
+        }
+        if(key.equals(mVPowerSwitch.getKey())) {
+            mData.put(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE,newValue);
+        } else {
+            mData.put(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE,mVPowerSwitch.isChecked());
+        }
+        if(key.equals(mVChangeTemperature.getKey())) {
+            mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,newValue);
+        } else {
+            mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,mVChangeTemperature.getValue());
+        }
         JSONObject jsonObject = new JSONObject(mData);
         SendSingleMessage.sendMsg(mAppId,mAppKey,mVChangeClientId.getValue(),jsonObject.toString());
         return true;
@@ -160,7 +189,9 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
             JSONObject jsonObject = new JSONObject(data);
             int current_temperature = jsonObject.getInt(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE);
             int current_gear = jsonObject.getInt(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR);
+            boolean current_power = jsonObject.getBoolean(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE);
 
+            mVPower.setChecked(current_power);
             mVCurrentGear.setSummary(String.valueOf(current_gear));
             mVTemperature.setSummary(String.valueOf(current_temperature));
         } catch (JSONException e) {
