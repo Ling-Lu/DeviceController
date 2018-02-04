@@ -61,9 +61,14 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
     public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int i, float v) {
         Log.d(TAG, "onProgressChanged: ");
         if(preferenceChange(this,i)) {
+            setSummary(String.valueOf(i));
             mEditor.putInt(getKey(),i);
             tryCommit(mEditor);
         };
+    }
+
+    public int getValue() {
+        return mBubbleSeekBar.getProgress();
     }
 
     @Override

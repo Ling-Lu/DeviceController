@@ -51,6 +51,7 @@
         <EditText android:id="@+id/id_pre_edit"
             style="@style/PreferenceSummary"
             android:maxLines="3"
+            android:selectAllOnFocus="true"
             android:maxWidth="@dimen/preference_summary_width"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
