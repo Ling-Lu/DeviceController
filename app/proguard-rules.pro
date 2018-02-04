@@ -24,5 +24,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -dontwarn com.igexin.**
+-dontwarn com.gexin.**
 -keep class com.igexin.** { *; }
 -keep class org.json.** { *; }

@@ -34,7 +34,7 @@ public class SendSingleMessage {
                 IGtPush push = new IGtPush(mAppKey, mMasterSecret,true);
                 TransmissionTemplate template = transmissionTemplateDemo(content);
                 SingleMessage message = new SingleMessage();
-//        message.setPriority(0);
+//                message.setPriority(0);
                 message.setOffline(true);
                 // 离线有效时间，单位为毫秒，可选
                 message.setOfflineExpireTime(1 * 3600 * 1000);
