@@ -69,6 +69,12 @@ public class CardCategoryPreferenceView extends CardView {
     }
 
     @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        mContent.setEnabled(enabled);
+    }
+
+    @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         Log.d(TAG, "onAttachedToWindow: ");

@@ -108,6 +108,14 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
         onClick(null);
         return mText;
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        mEditText.setEnabled(enabled);
+        mButton.setEnabled(enabled);
+    }
+
     @Override
     public void onClick(View v) {
         String text = mEditText.getText().toString();

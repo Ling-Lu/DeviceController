@@ -87,6 +87,17 @@ public class PreferenceCategoryView extends LinearLayout {
             mDivider.setVisibility(GONE);
         }
     }
+    public void setChildrenEnable(boolean enable) {
+        int childCnt = getChildCount();
+        for (int i = 0; i < childCnt; i ++) {
+            getChildAt(i).setEnabled(enable);
+        }
+    }
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setChildrenEnable(enabled);
+    }
     private boolean isCategoryShouldShow() {
         return mSummaryTextView.getVisibility() == VISIBLE || mTitleTextView.getVisibility() == VISIBLE;
     }

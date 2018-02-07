@@ -72,6 +72,12 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
     }
 
     @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        mBubbleSeekBar.setEnabled(enabled);
+    }
+
+    @Override
     public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int i, float v) {
     }
 

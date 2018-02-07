@@ -74,6 +74,12 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
         }
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        mSwitch.setEnabled(enabled);
+    }
+
     public boolean isChecked() {
         return mSwitch.isChecked();
     }
