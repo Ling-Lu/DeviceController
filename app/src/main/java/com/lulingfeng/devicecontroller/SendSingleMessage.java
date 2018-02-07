@@ -25,9 +25,11 @@ public class SendSingleMessage {
     static String host = "http://sdk.open.api.igexin.com/apiex.htm";
 
     public static void sendMsg(String appId,String appKey,String cid,final String content) {
+
         mAppId = appId;
         mAppKey = appKey;
         mCID = cid;
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -46,12 +48,14 @@ public class SendSingleMessage {
                 target.setClientId(mCID);
                 //target.setAlias(Alias);
                 IPushResult ret = null;
-                Log.d(TAG, "run: " + push.getClientIdStatus(mAppId,mCID));
+                Log.d(TAG, "run: getClientIdStatus" + push.getClientIdStatus(mAppId,mCID));
                 try {
                     ret = push.pushMessageToSingle(message, target);
                 } catch (RequestException e) {
                     e.printStackTrace();
                     ret = push.pushMessageToSingle(message, target, e.getRequestId());
+                } catch (Exception e) {
+                    Log.e(TAG, "can not get the error, should never help");
                 }
                 if (ret != null) {
                     System.out.println(ret.getResponse().toString());

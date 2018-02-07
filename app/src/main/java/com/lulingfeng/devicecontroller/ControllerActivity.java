@@ -7,12 +7,15 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.igexin.sdk.PushManager;
+import com.lulingfeng.viewpreference.CardCategoryPreferenceView;
 import com.lulingfeng.viewpreference.EditPreferenceView;
 import com.lulingfeng.viewpreference.PreferenceItemView;
 import com.lulingfeng.viewpreference.SeekPreferenceView;
@@ -23,7 +26,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 public class ControllerActivity extends AppCompatActivity implements PreferenceItemView.OnPreferenceChangedListener,DeviceControllerApplication.OnDataReceiveListener{
     private final static String TAG = ControllerActivity.class.getSimpleName();
@@ -36,6 +41,9 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
     private SwitchPreferenceView mVPower;
     private PreferenceItemView mVClientId;
     private PreferenceItemView mVCurrentGear;
+    private CardCategoryPreferenceView mVOrders;
+    private CardCategoryPreferenceView mRemoteStates;
+    private Handler mHandler = new Handler();
     private String mAppKey = "";
     private String mAppSecret = "";
     private String mAppId = "";
@@ -107,8 +115,10 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
         mVCurrentGear = (PreferenceItemView) findViewById(R.id.id_gear);
         mVPower = (SwitchPreferenceView) findViewById(R.id.id_power);
         mVClientId = (PreferenceItemView) findViewById(R.id.id_device_data);
+        mVOrders = (CardCategoryPreferenceView) findViewById(R.id.id_orders);
+        mRemoteStates = (CardCategoryPreferenceView) findViewById(R.id.id_remote_states);
 
-        mVPower.setEnabled(false);
+        mRemoteStates.setEnabled(false);
         mVPowerSwitch.setOnPreferenceChangeListener(this);
         mVChangeClientId.setOnPreferenceChangeListener(this);
         mVChangeTemperature.setOnPreferenceChangeListener(this);
@@ -128,26 +138,6 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
         }
     }
 
-
-    /**
-     * 判断网络是否连接.
-     */
-    private boolean isNetworkConnected() {
-        ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null) {
-                for (NetworkInfo ni : info) {
-                    if (ni.getState() == NetworkInfo.State.CONNECTED) {
-                        Log.d(TAG, "type = " + (ni.getType() == 0 ? "mobile" : ((ni.getType() == 1) ? "wifi" : "none")));
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
     @Override
     public boolean onPreferenceChange(PreferenceItemView preferenceItemView, Object newValue) {
         Map<String,Object> mData = new HashMap<>();
@@ -174,10 +164,36 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,mVChangeTemperature.getValue());
         }
         JSONObject jsonObject = new JSONObject(mData);
-        SendSingleMessage.sendMsg(mAppId,mAppKey,mVChangeClientId.getValue(),jsonObject.toString());
+        startToSend(jsonObject);
         return true;
     }
-
+    Queue<Long> mSendTimes = new LinkedList<>();
+    final static int continue_time = 3;
+    final static int continue_threshold = 350;
+    final static int reEnableOrderTime = 5000;
+    Runnable reEnableOrders = new Runnable() {
+        @Override
+        public void run() {
+            mVOrders.setEnabled(true);
+        }
+    };
+    private void startToSend(JSONObject jsonObject) {
+        long sendTime = System.currentTimeMillis();
+        mSendTimes.offer(sendTime);
+        if(mSendTimes.size() >= continue_time) {
+            int avgTime = (int) ((sendTime - mSendTimes.poll()) / continue_time);
+            if(avgTime < continue_threshold) {
+                Toast.makeText(getApplicationContext(),"Your operation is too frequent , please do it after 5s",Toast.LENGTH_LONG).show();
+                mVOrders.setEnabled(false);
+                mHandler.postDelayed(reEnableOrders,reEnableOrderTime);
+            }
+        }
+        if(DeviceControllerUtils.isNetworkConnected(getApplicationContext())) {
+            SendSingleMessage.sendMsg(mAppId, mAppKey, mVChangeClientId.getValue(), jsonObject.toString());
+        } else {
+            Toast.makeText(getApplicationContext(),"Please check your network connection",Toast.LENGTH_LONG).show();
+        }
+    }
     @Override
     public void onReceiveClientId(String cid) {
         mVClientId.setSummary(cid);

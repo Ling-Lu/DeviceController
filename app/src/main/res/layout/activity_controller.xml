@@ -17,6 +17,7 @@
             <com.lulingfeng.viewpreference.CardCategoryPreferenceView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/id_orders"
                 app:Title="Orders">
 
                 <com.lulingfeng.viewpreference.SwitchPreferenceView
@@ -53,6 +54,7 @@
             <com.lulingfeng.viewpreference.CardCategoryPreferenceView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/id_remote_states"
                 app:Title="Remote device state">
 
                 <com.lulingfeng.viewpreference.SwitchPreferenceView
