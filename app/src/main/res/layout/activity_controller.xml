@@ -30,7 +30,7 @@
                     android:id="@+id/id_temperature_changed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:Key="pre_temperature_changed"
+                    app:Key="key_temperature_changed"
                     app:Title="Set temperature"
                     app:DefaultValue="25"/>
                 <com.lulingfeng.viewpreference.EditPreferenceView
@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/id_gear_set"
                     app:Title="Set Heating Gear"
-                    app:Key="ke_gear_set"
+                    app:Key="key_gear_set"
                     app:DefaultValue="80"
                     />
                 <com.lulingfeng.viewpreference.EditPreferenceView
@@ -62,10 +62,12 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/id_power"
                     app:Title="Power"
-                    app:Summary="off"/>
+                    app:Summary="off"
+                    app:Enable="false"/>
                 <com.lulingfeng.viewpreference.PreferenceItemView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:Enable="false"
                     android:id="@+id/id_temperature"
                     app:Summary="0"
                     app:Title="temperature"/>
@@ -74,7 +76,16 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/id_gear"
                     app:Title="Heating Gear"
-                    app:Summary="off"/>
+                    app:Summary="The speed warming up"
+                    app:Enable="false"/>
+                <com.lulingfeng.viewpreference.SwitchEditPreferenceView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_warning"
+                    app:Key="key_warning"
+                    app:Title="Warning"
+                    app:DefaultValue="Input phone number here Receiving warning message"
+                    />
 
             </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
             <com.lulingfeng.viewpreference.CardCategoryPreferenceView

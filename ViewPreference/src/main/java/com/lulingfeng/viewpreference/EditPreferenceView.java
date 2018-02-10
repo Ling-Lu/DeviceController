@@ -125,7 +125,6 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
     }
 
     public String getValue() {
-        onEditTextChanged();
         return mText;
     }
 

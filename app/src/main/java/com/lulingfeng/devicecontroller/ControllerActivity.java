@@ -1,24 +1,30 @@
 package com.lulingfeng.devicecontroller;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.igexin.sdk.PushManager;
 import com.lulingfeng.viewpreference.CardCategoryPreferenceView;
 import com.lulingfeng.viewpreference.EditPreferenceView;
 import com.lulingfeng.viewpreference.PreferenceItemView;
-import com.lulingfeng.viewpreference.SeekPreferenceView;
+import com.lulingfeng.viewpreference.SwitchEditPreferenceView;
 import com.lulingfeng.viewpreference.SwitchPreferenceView;
 
 import org.json.JSONException;
@@ -27,10 +33,16 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-public class ControllerActivity extends AppCompatActivity implements PreferenceItemView.OnPreferenceChangedListener,DeviceControllerApplication.OnDataReceiveListener{
+import static com.igexin.sdk.GTServiceManager.context;
+
+public class ControllerActivity extends AppCompatActivity
+        implements PreferenceItemView.OnPreferenceChangedListener,
+                        DeviceControllerApplication.OnDataReceiveListener,
+                        PreferenceItemView.OnSwitchChangedListener{
     private final static String TAG = ControllerActivity.class.getSimpleName();
     private static final int REQUEST_PERMISSION = 0;
     private SwitchPreferenceView mVPowerSwitch;
@@ -42,7 +54,8 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
     private PreferenceItemView mVClientId;
     private PreferenceItemView mVCurrentGear;
     private CardCategoryPreferenceView mVOrders;
-    private CardCategoryPreferenceView mRemoteStates;
+    private CardCategoryPreferenceView mVRemoteStates;
+    private SwitchEditPreferenceView mVWarning;
     private Handler mHandler = new Handler();
     private String mAppKey = "";
     private String mAppSecret = "";
@@ -116,13 +129,14 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
         mVPower = (SwitchPreferenceView) findViewById(R.id.id_power);
         mVClientId = (PreferenceItemView) findViewById(R.id.id_device_data);
         mVOrders = (CardCategoryPreferenceView) findViewById(R.id.id_orders);
-        mRemoteStates = (CardCategoryPreferenceView) findViewById(R.id.id_remote_states);
+        mVRemoteStates = (CardCategoryPreferenceView) findViewById(R.id.id_remote_states);
+        mVWarning = (SwitchEditPreferenceView) findViewById(R.id.id_warning);
 
-        mRemoteStates.setEnabled(false);
         mVPowerSwitch.setOnPreferenceChangeListener(this);
         mVChangeClientId.setOnPreferenceChangeListener(this);
         mVChangeTemperature.setOnPreferenceChangeListener(this);
         mVChangeGear.setOnPreferenceChangeListener(this);
+        mVWarning.setOnCheckedChangeListener(this);
     }
     private void parseManifests() {
         String packageName = getApplicationContext().getPackageName();
@@ -142,30 +156,47 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
     public boolean onPreferenceChange(PreferenceItemView preferenceItemView, Object newValue) {
         Map<String,Object> mData = new HashMap<>();
         String key = preferenceItemView.getKey();
+        boolean isNeedSend = false;
         if(key == null) return false;
         if(key.equals(mVChangeClientId.getKey())) {
+            isNeedSend = true;
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE,mVPowerSwitch.isChecked());
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR,mVChangeGear.getValue());
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,mVChangeTemperature.getValue());
         }
         if(key.equals(mVChangeGear.getKey())) {
+            isNeedSend = true;
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR,newValue);
         } else {
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR,mVChangeGear.getValue());
         }
         if(key.equals(mVPowerSwitch.getKey())) {
+            isNeedSend = true;
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE,newValue);
         } else {
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE,mVPowerSwitch.isChecked());
         }
         if(key.equals(mVChangeTemperature.getKey())) {
+            isNeedSend = true;
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,newValue);
         } else {
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,mVChangeTemperature.getValue());
         }
-        JSONObject jsonObject = new JSONObject(mData);
-        startToSend(jsonObject);
+        mData.put(DeviceControllerUtils.ControllerConstants.KEY_WARNING_MSG,"Warning happened");
+        if(isNeedSend) {
+            JSONObject jsonObject = new JSONObject(mData);
+            startToSend(jsonObject);
+        }
         return true;
+    }
+    private boolean tryToSetWarningPhoneNum() {
+        if(DeviceControllerUtils.isValidPhoneNum(mVWarning.getValue())) {
+            Toast.makeText(getApplicationContext(),mVWarning.getValue() + "-Warning number set successful",Toast.LENGTH_LONG).show();
+            return true;
+        } else {
+            Toast.makeText(getApplicationContext(),"Phone number Invalid, please set again",Toast.LENGTH_LONG).show();
+            return false;
+        }
     }
     Queue<Long> mSendTimes = new LinkedList<>();
     final static int continue_time = 3;
@@ -199,6 +230,71 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
         mVClientId.setSummary(cid);
     }
 
+
+
+    /**
+     * 直接调用短信接口发短信
+     * @param phoneNumber
+     * @param message
+     */
+    public void sendSMS(String phoneNumber,String message){
+        //处理返回的发送状态
+        String SENT_SMS_ACTION = "SENT_SMS_ACTION";
+        Intent sentIntent = new Intent(SENT_SMS_ACTION);
+        PendingIntent sentPI = PendingIntent.getBroadcast(getApplicationContext(), 0, sentIntent,
+                0);
+        // register the Broadcast Receivers
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context _context, Intent _intent) {
+                switch (getResultCode()) {
+                    case Activity.RESULT_OK:
+                        Toast.makeText(context,
+                                "短信发送成功", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        break;
+                }
+            }
+        }, new IntentFilter(SENT_SMS_ACTION));
+        //处理返回的接收状态
+        String DELIVERED_SMS_ACTION = "DELIVERED_SMS_ACTION";
+        // create the deilverIntent parameter
+        Intent deliverIntent = new Intent(DELIVERED_SMS_ACTION);
+        PendingIntent deliverPI = PendingIntent.getBroadcast(context, 0,
+                deliverIntent, 0);
+
+        context.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context _context, Intent _intent) {
+                Toast.makeText(context,
+                        "收信人已经成功接收", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }, new IntentFilter(DELIVERED_SMS_ACTION));
+        //获取短信管理器
+        android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
+        //拆分短信内容（手机短信长度限制）
+        List<String> divideContents = smsManager.divideMessage(message);
+        for (String text : divideContents) {
+            smsManager.sendTextMessage(phoneNumber, null, text, sentPI, deliverPI);
+        }
+    }
+    private void handleWaring(JSONObject jsonObject) {
+        try {
+            String warningMsg = jsonObject.getString(DeviceControllerUtils.ControllerConstants.KEY_WARNING_MSG);
+            if(mVWarning.isChecked()) {
+                sendSMS(mVWarning.getValue(),warningMsg);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onReceiveTransmissionData(String data) {
         try {
@@ -206,6 +302,7 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
             int current_temperature = jsonObject.getInt(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE);
             int current_gear = jsonObject.getInt(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_GEAR);
             boolean current_power = jsonObject.getBoolean(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE);
+            handleWaring(jsonObject);
 
             mVPower.setChecked(current_power);
             mVCurrentGear.setSummary(String.valueOf(current_gear));
@@ -213,5 +310,19 @@ public class ControllerActivity extends AppCompatActivity implements PreferenceI
         } catch (JSONException e) {
             Log.e(TAG, "OnReceiveTransmissionData: getJsonData error", e);
         }
+    }
+
+    @Override
+    public boolean onSwitchChanged(String key, boolean isChecked) {
+        if (TextUtils.isEmpty(key)) return false;
+
+        if(key.equals(mVWarning.getSwitch_Key())) {
+            if(isChecked) {
+                return tryToSetWarningPhoneNum();
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 }
