@@ -23,7 +23,7 @@ import android.widget.TextView;
 public class EditPreferenceView extends PreferenceItemView implements TextView.OnEditorActionListener,TextWatcher,View.OnClickListener{
     private final static String TAG = EditPreferenceView.class.getSimpleName();
     private EditText mEditText;
-    private Button mButton;
+    protected Button mButton;
     private String mText;
     private String mDefaultValue;
     public EditPreferenceView(Context context) {
@@ -97,15 +97,35 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
         }
         return false;
     }
-    private void onEditTextChanged(String text) {
-        mText = text;
-        if (preferenceChange(this,mText)) {
+    protected boolean onEditTextChanged() {
+        String text = mEditText.getText().toString();
+        boolean isEditTextChanged = false;
+        if(TextUtils.isEmpty(mText)) {
+            if(!TextUtils.isEmpty(text)) {
+                isEditTextChanged = true;
+            }
+        } else {
+            if(!mText.equals(text)) {
+                isEditTextChanged = true;
+            }
+        }
+        if (isEditTextChanged && preferenceChange(this,mText)) {
+            mText = text;
             mEditor.putString(getKey(),mText);
             tryCommit(mEditor);
+            return true;
         }
+        return false;
     }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        onEditTextChanged();
+    }
+
     public String getValue() {
-        onClick(null);
+        onEditTextChanged();
         return mText;
     }
 
@@ -118,16 +138,7 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
 
     @Override
     public void onClick(View v) {
-        String text = mEditText.getText().toString();
-        if(TextUtils.isEmpty(mText)) {
-            if(!TextUtils.isEmpty(text)) {
-                onEditTextChanged(text);
-            }
-        } else {
-            if(!mText.equals(text)) {
-                onEditTextChanged(text);
-            }
-        }
+        onEditTextChanged();
     }
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {

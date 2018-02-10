@@ -5,6 +5,7 @@
         <attr name="Summary" format="string" />
         <attr name="Key" format="string" />
         <attr name="DefaultValue" format="boolean|string|reference|integer|dimension" />
+        <attr name="Enable" format="boolean"/>
         <attr name="Margins" format="dimension" />
     </declare-styleable>
 </resources>

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,10 +30,11 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
     private ViewGroup mPreviewVg;
     private ImageView mIconIv;
     private TextView mTitleTv;
-    private TextView mSummaryTv;
+    protected TextView mSummaryTv;
     protected String mTitleStr;
     protected String mSummaryStr;
     protected String mKeyStr;
+    protected boolean mIsEnable;
     private OnPreferenceChangedListener mOnPreferenceChangedListener;
     public PreferenceItemView(Context context) {
         super(context);
@@ -58,6 +60,7 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         mTitleStr = ta.getString(R.styleable.PreferenceView_Title);
         mSummaryStr = ta.getString(R.styleable.PreferenceView_Summary);
         mKeyStr = ta.getString(R.styleable.PreferenceView_Key);
+        mIsEnable = ta.getBoolean(R.styleable.PreferenceView_Enable,true);
         ta.recycle();
     }
     private void init(Context context,AttributeSet attrs) {
@@ -65,6 +68,7 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         getAttrs(attrs);
         inflate(mContext, R.layout.preference_item,this);
         mKey = (String) getTag();
+        if (!TextUtils.isEmpty(mKeyStr)) mKey = mKeyStr;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
         mEditor = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
 
@@ -73,15 +77,15 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         mTitleTv = (TextView) findViewById(R.id.id_pre_title);
         mSummaryTv = (TextView) findViewById(R.id.id_pre_summary);
 
-        if (!TextUtils.isEmpty(mKeyStr)) mKey = mKeyStr;
-        setTitle(mTitleStr);
-        setSummary(mSummaryStr);
         this.setOnClickListener(this);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        setTitle(mTitleStr);
+        setSummary(mSummaryStr);
+        setEnabled(mIsEnable);
     }
 
     @Override
@@ -165,5 +169,8 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
 
     public interface OnPreferenceChangedListener {
         boolean onPreferenceChange(PreferenceItemView preferenceItemView, Object newValue);
+    }
+    public interface OnSwitchChangedListener {
+        boolean onSwitchChanged(String key, boolean isChecked);
     }
 }

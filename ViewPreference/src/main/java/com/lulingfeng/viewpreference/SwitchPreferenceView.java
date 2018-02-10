@@ -16,7 +16,6 @@ import android.widget.Switch;
 public class SwitchPreferenceView extends PreferenceItemView implements CompoundButton.OnCheckedChangeListener{
     private final static String TAG = PreferenceItemView.class.getSimpleName();
     private Switch mSwitch;
-    private OnSwitchChangedListener mOnSwitchChangeListener;
     private boolean mDefaultValue;
     public SwitchPreferenceView(Context context) {
         super(context);
@@ -48,17 +47,14 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
         getDefaultValue(attrs);
         mSwitch = (Switch) findViewById(R.id.id_pre_switch);
         mSwitch.setVisibility(VISIBLE);
-        mSwitch.setOnCheckedChangeListener(this);
         if (mSharedPreferences.contains(getKey())) {
             mSwitch.setChecked(mSharedPreferences.getBoolean(getKey(), false));
         } else {
             mSwitch.setChecked(mDefaultValue);
         }
+        mSwitch.setOnCheckedChangeListener(this);
         setSummary(isChecked() ? mContext.getString(R.string.on) : mContext.getString(R.string.off));
         this.setOnClickListener(this);
-    }
-    public void setOnCheckedChangeListener(OnSwitchChangedListener checkedChangeListener) {
-        mOnSwitchChangeListener = checkedChangeListener;
     }
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -92,8 +88,4 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
         onCheckedChanged(null,!mSwitch.isChecked());
     }
 
-
-    public interface OnSwitchChangedListener {
-        boolean onSwitchChanged(CompoundButton buttonView, boolean isChecked);
-    }
 }
