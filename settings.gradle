@@ -1,3 +1,1 @@
-include ':app', ':BubbleSeekbar', ':ViewPreference',':ColorPickerPreference'
-project(':ColorPickerPreference').projectDir = new File('ViewPreference/libs/ColorPickerPreference')
-project(':BubbleSeekbar').projectDir = new File('ViewPreference/libs/BubbleSeekbar')
+include ':app', ':ViewPreference'

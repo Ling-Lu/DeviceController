@@ -57,16 +57,6 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
         setSummary(String.valueOf(mDefaultValue));
     }
 
-    @Override
-    public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int i, float v) {
-        Log.d(TAG, "onProgressChanged: ");
-        if(preferenceChange(this,i)) {
-            setSummary(String.valueOf(i));
-            mEditor.putInt(getKey(),i);
-            tryCommit(mEditor);
-        };
-    }
-
     public int getValue() {
         return mBubbleSeekBar.getProgress();
     }
@@ -78,10 +68,21 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
     }
 
     @Override
+    public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int i, float v, boolean b) {
+        Log.d(TAG, "onProgressChanged: ");
+        if(preferenceChange(this,i)) {
+            setSummary(String.valueOf(i));
+            mEditor.putInt(getKey(),i);
+            tryCommit(mEditor);
+        };
+    }
+
+    @Override
     public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int i, float v) {
     }
 
     @Override
-    public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int i, float v) {
+    public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int i, float v, boolean b) {
+
     }
 }

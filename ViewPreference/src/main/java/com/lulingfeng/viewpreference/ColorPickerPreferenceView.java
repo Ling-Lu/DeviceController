@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
-import net.margaritov.preference.colorpicker.ColorPickerImagePreview;
 
 /**
  * Created by Administrator on 2018/1/11 0011.
