@@ -45,6 +45,7 @@
             android:maxLines="3"
             android:ellipsize="marquee"
             android:maxWidth="@dimen/preference_summary_width"
+            android:textIsSelectable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"/>

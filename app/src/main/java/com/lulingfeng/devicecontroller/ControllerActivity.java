@@ -158,6 +158,7 @@ public class ControllerActivity extends AppCompatActivity
         String key = preferenceItemView.getKey();
         boolean isNeedSend = false;
         if(key == null) return false;
+//        Toast.makeText(getApplicationContext(),key,Toast.LENGTH_LONG).show();
         if(key.equals(mVChangeClientId.getKey())) {
             isNeedSend = true;
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_SWITCH_STATE,mVPowerSwitch.isChecked());
@@ -183,9 +184,14 @@ public class ControllerActivity extends AppCompatActivity
             mData.put(DeviceControllerUtils.ControllerConstants.KEY_CURRENT_TEMPERATURE,mVChangeTemperature.getValue());
         }
         mData.put(DeviceControllerUtils.ControllerConstants.KEY_WARNING_MSG,"Warning happened");
+        final JSONObject jsonObject = new JSONObject(mData);
         if(isNeedSend) {
-            JSONObject jsonObject = new JSONObject(mData);
-            startToSend(jsonObject);
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    startToSend(jsonObject);
+                }
+            });
         }
         return true;
     }
@@ -199,7 +205,7 @@ public class ControllerActivity extends AppCompatActivity
         }
     }
     Queue<Long> mSendTimes = new LinkedList<>();
-    final static int continue_time = 3;
+    final static int continue_time = 5;
     final static int continue_threshold = 350;
     final static int reEnableOrderTime = 5000;
     Runnable reEnableOrders = new Runnable() {

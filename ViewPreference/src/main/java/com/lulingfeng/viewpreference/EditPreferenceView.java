@@ -57,14 +57,15 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
         setClickable(false);
         mEditText = (EditText) findViewById(R.id.id_pre_edit);
         mButton = (Button) findViewById(R.id.id_pre_btn_set);
-        mButton.setOnClickListener(this);
-        mEditText.setOnEditorActionListener(this);
+
         mText = mSharedPreferences.getString(getKey(),null);
         if(!mSharedPreferences.contains(getKey())) {
             mEditText.setText(mDefaultValue);
         } else {
             mEditText.setText(mText);
         }
+        mButton.setOnClickListener(this);
+        mEditText.setOnEditorActionListener(this);
         mEditText.setVisibility(VISIBLE);
         mButton.setVisibility(VISIBLE);
 //        mEditText.addTextChangedListener(this);
@@ -109,7 +110,7 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
                 isEditTextChanged = true;
             }
         }
-        if (isEditTextChanged && preferenceChange(this,mText)) {
+        if (isEditTextChanged && preferenceChange(this,text)) {
             mText = text;
             mEditor.putString(getKey(),mText);
             tryCommit(mEditor);
