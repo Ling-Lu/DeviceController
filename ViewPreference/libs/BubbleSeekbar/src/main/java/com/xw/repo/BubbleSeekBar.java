@@ -1344,7 +1344,6 @@ public class BubbleSeekBar extends View {
 
     /**
      * Listener adapter
-     * <br/>
      * usage like {@link AnimatorListenerAdapter}
      */
     public static abstract class OnProgressChangedListenerAdapter implements OnProgressChangedListener {
@@ -1368,20 +1367,6 @@ public class BubbleSeekBar extends View {
      */
     public interface CustomSectionTextArray {
         /**
-         * <p>
-         * Customization goes here.
-         * </p>
-         * For example:
-         * <pre> public SparseArray<String> onCustomize(int sectionCount, @NonNull SparseArray<String> array) {
-         *     array.clear();
-         *
-         *     array.put(0, "worst");
-         *     array.put(4, "bad");
-         *     array.put(6, "ok");
-         *     array.put(8, "good");
-         *     array.put(9, "great");
-         *     array.put(10, "excellent");
-         * }</pre>
          *
          * @param sectionCount The section count of the {@code BubbleSeekBar}.
          * @param array        The section texts array which had been initialized already. Customize
