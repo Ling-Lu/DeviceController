@@ -53,7 +53,7 @@ public class PreferenceCategoryView extends LinearLayout {
     }
     private void init () {
         setOrientation(LinearLayout.VERTICAL);
-        inflate(getContext(), R.layout.preference_category,this);
+        addView(inflate(getContext(), R.layout.preference_category,null));
         mTitleTextView = (TextView) findViewById(R.id.id_pre_category_title);
         mSummaryTextView = (TextView) findViewById(R.id.id_pre_category_summary);
         mDivider = findViewById(R.id.id_pre_category_divider);
