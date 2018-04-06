@@ -54,6 +54,12 @@ public class PreferenceCategoryView extends LinearLayout {
     private void init () {
         setOrientation(LinearLayout.VERTICAL);
         inflate(getContext(), R.layout.preference_category,this);
+        mTitleTextView = (TextView) findViewById(R.id.id_pre_category_title);
+        mSummaryTextView = (TextView) findViewById(R.id.id_pre_category_summary);
+        mDivider = findViewById(R.id.id_pre_category_divider);
+
+        setTitle(mTitleStr);
+        setSummary(mSummaryStr);
     }
 
     public void setTitle(String title) {
@@ -99,11 +105,5 @@ public class PreferenceCategoryView extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mTitleTextView = (TextView) findViewById(R.id.id_pre_category_title);
-        mSummaryTextView = (TextView) findViewById(R.id.id_pre_category_summary);
-        mDivider = findViewById(R.id.id_pre_preferenc_view_category_divider);
-
-        setTitle(mTitleStr);
-        setSummary(mSummaryStr);
     }
 }
