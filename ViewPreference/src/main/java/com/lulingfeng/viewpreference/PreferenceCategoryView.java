@@ -56,17 +56,6 @@ public class PreferenceCategoryView extends LinearLayout {
         inflate(getContext(), R.layout.preference_category,this);
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        mTitleTextView = (TextView) findViewById(R.id.id_pre_category_title);
-        mSummaryTextView = (TextView) findViewById(R.id.id_pre_category_summary);
-        mDivider = findViewById(R.id.id_pre_category_divider);
-
-        setTitle(mTitleStr);
-        setSummary(mSummaryStr);
-    }
-
     public void setTitle(String title) {
         mTitleTextView.setText(title);
         if(!TextUtils.isEmpty(title)) {
@@ -110,6 +99,11 @@ public class PreferenceCategoryView extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        mTitleTextView = (TextView) findViewById(R.id.id_pre_category_title);
+        mSummaryTextView = (TextView) findViewById(R.id.id_pre_category_summary);
+        mDivider = findViewById(R.id.id_pre_category_divider);
 
+        setTitle(mTitleStr);
+        setSummary(mSummaryStr);
     }
 }
