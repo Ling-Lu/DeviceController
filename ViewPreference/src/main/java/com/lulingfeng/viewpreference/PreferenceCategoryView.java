@@ -101,7 +101,7 @@ public class PreferenceCategoryView extends LinearLayout {
         super.onAttachedToWindow();
         mTitleTextView = (TextView) findViewById(R.id.id_pre_category_title);
         mSummaryTextView = (TextView) findViewById(R.id.id_pre_category_summary);
-        mDivider = findViewById(R.id.id_pre_category_divider);
+        mDivider = findViewById(R.id.id_pre_preferenc_view_category_divider);
 
         setTitle(mTitleStr);
         setSummary(mSummaryStr);

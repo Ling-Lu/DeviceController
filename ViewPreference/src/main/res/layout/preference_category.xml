@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"/>
     </LinearLayout>
-    <View android:id="@+id/id_pre_category_divider"
+    <View android:id="@+id/id_pre_preferenc_view_category_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"/>
