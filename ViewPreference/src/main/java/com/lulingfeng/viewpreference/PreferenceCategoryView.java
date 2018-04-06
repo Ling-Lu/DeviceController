@@ -53,10 +53,10 @@ public class PreferenceCategoryView extends LinearLayout {
     }
     private void init () {
         setOrientation(LinearLayout.VERTICAL);
-        addView(inflate(getContext(), R.layout.preference_category,null));
+        inflate(getContext(), R.layout.preference_category,this);
         mTitleTextView = (TextView) findViewById(R.id.id_pre_category_title);
         mSummaryTextView = (TextView) findViewById(R.id.id_pre_category_summary);
-        mDivider = findViewById(R.id.id_pre_category_divider);
+//        mDivider = findViewById(R.id.id_pre_category_divider);
 
         setTitle(mTitleStr);
         setSummary(mSummaryStr);
@@ -81,11 +81,11 @@ public class PreferenceCategoryView extends LinearLayout {
     }
 
     private void updateDivider() {
-        if (isCategoryShouldShow()) {
-            mDivider.setVisibility(VISIBLE);
-        } else {
-            mDivider.setVisibility(GONE);
-        }
+//        if (isCategoryShouldShow()) {
+//            mDivider.setVisibility(VISIBLE);
+//        } else {
+//            mDivider.setVisibility(GONE);
+//        }
     }
     public void setChildrenEnable(boolean enable) {
         int childCnt = getChildCount();
