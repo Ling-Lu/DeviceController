@@ -38,8 +38,8 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
         init(context,attrs);
     }
     private boolean getDefaultValue(AttributeSet attrs) {
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceView);
-        mDefaultValue = ta.getBoolean(R.styleable.PreferenceView_DefaultValue,false);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceItemView);
+        mDefaultValue = ta.getBoolean(R.styleable.PreferenceItemView_DefaultValue,false);
         ta.recycle();
         return mDefaultValue;
     }
@@ -48,13 +48,23 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
         mSwitch = (Switch) findViewById(R.id.id_pre_switch);
         mSwitch.setVisibility(VISIBLE);
         if (mSharedPreferences.contains(getKey())) {
-            mSwitch.setChecked(mSharedPreferences.getBoolean(getKey(), false));
+            setChecked(mSharedPreferences.getBoolean(getKey(), false));
         } else {
-            mSwitch.setChecked(mDefaultValue);
+            setChecked(mDefaultValue);
         }
         mSwitch.setOnCheckedChangeListener(this);
         setSummary(isChecked() ? mContext.getString(R.string.on) : mContext.getString(R.string.off));
         this.setOnClickListener(this);
+    }
+
+    @Override
+    protected void updateKeyValue() {
+        if (mSharedPreferences.contains(getKey())) {
+            mDefaultValue = mSharedPreferences.getBoolean(getKey(), false);
+            setChecked(mDefaultValue);
+        } else {
+            setChecked(mDefaultValue);
+        }
     }
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -64,9 +74,9 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
         if (preferenceChange(this,isChecked)) {
             mEditor.putBoolean(getKey(),isChecked);
             tryCommit(mEditor);
-            mSwitch.setChecked(isChecked);
+            setChecked(isChecked);
         } else {
-            mSwitch.setChecked(!isChecked);
+            setChecked(!isChecked);
         }
     }
 

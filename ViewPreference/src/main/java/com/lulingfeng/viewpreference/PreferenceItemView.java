@@ -3,6 +3,7 @@ package com.lulingfeng.viewpreference;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
@@ -10,11 +11,9 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.lulingfeng.viewpreference.R;
 
 
 /**
@@ -56,11 +55,11 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         init(context,attrs);
     }
     private void getAttrs(AttributeSet attrs) {
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceView);
-        mTitleStr = ta.getString(R.styleable.PreferenceView_Title);
-        mSummaryStr = ta.getString(R.styleable.PreferenceView_Summary);
-        mKeyStr = ta.getString(R.styleable.PreferenceView_Key);
-        mIsEnable = ta.getBoolean(R.styleable.PreferenceView_Enable,true);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceItemView);
+        mTitleStr = ta.getString(R.styleable.PreferenceItemView_Title);
+        mSummaryStr = ta.getString(R.styleable.PreferenceItemView_Summary);
+        mKeyStr = ta.getString(R.styleable.PreferenceItemView_Key);
+        mIsEnable = ta.getBoolean(R.styleable.PreferenceItemView_Enable,true);
         ta.recycle();
     }
     private void init(Context context,AttributeSet attrs) {
@@ -125,7 +124,7 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
             mPreviewVg.setVisibility(GONE);
         }
     }
-    public void setmIcon(int srcId) {
+    public void setIcon(int srcId) {
         if(srcId != 0) {
             mIconIv.setBackgroundResource(srcId);
             mIconIv.setVisibility(VISIBLE);
@@ -133,6 +132,19 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
             mIconIv.setVisibility(GONE);
         }
     }
+    public void setIcon(Drawable icon) {
+        if (icon != null) {
+            mIconIv.setVisibility(VISIBLE);
+        } else {
+            mIconIv.setVisibility(GONE);
+        }
+        mIconIv.setImageDrawable(icon);
+    }
+    public void setKey(String key) {
+        mKey = key;
+        updateKeyValue();
+    }
+    protected void updateKeyValue(){}
     public void tryCommit(SharedPreferences.Editor editor) {
         try {
             editor.apply();

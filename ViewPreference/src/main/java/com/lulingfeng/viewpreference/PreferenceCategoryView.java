@@ -46,9 +46,9 @@ public class PreferenceCategoryView extends LinearLayout {
     }
 
     private void getAttrs(AttributeSet attrs) {
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceView);
-        mTitleStr = ta.getString(R.styleable.PreferenceView_Title);
-        mSummaryStr = ta.getString(R.styleable.PreferenceView_Summary);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceItemView);
+        mTitleStr = ta.getString(R.styleable.PreferenceItemView_Title);
+        mSummaryStr = ta.getString(R.styleable.PreferenceItemView_Summary);
         ta.recycle();
     }
     private void init () {

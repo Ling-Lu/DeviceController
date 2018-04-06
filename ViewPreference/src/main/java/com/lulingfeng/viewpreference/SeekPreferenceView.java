@@ -38,8 +38,8 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
         init(context,attrs);
     }
     private void getAttrs(AttributeSet attrs) {
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceView);
-        mDefaultValue = ta.getInt(R.styleable.PreferenceView_DefaultValue,1);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceItemView);
+        mDefaultValue = ta.getInt(R.styleable.PreferenceItemView_DefaultValue,1);
         ta.recycle();
     }
     private void init(Context context,AttributeSet attrs) {
@@ -56,7 +56,15 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
         }
         setSummary(String.valueOf(mDefaultValue));
     }
-
+    @Override
+    protected void updateKeyValue() {
+        if (mSharedPreferences.contains(getKey())) {
+            mDefaultValue = mSharedPreferences.getInt(getKey(),1);
+            mBubbleSeekBar.setProgress(mDefaultValue);
+        } else {
+            mBubbleSeekBar.setProgress(mDefaultValue);
+        }
+    }
     public int getValue() {
         return mBubbleSeekBar.getProgress();
     }
@@ -74,7 +82,7 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
             setSummary(String.valueOf(i));
             mEditor.putInt(getKey(),i);
             tryCommit(mEditor);
-        };
+        }
     }
 
     @Override

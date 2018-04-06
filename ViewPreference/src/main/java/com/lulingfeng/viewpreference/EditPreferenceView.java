@@ -47,8 +47,8 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
         init(context,attrs);
     }
     private String getDefaultValue(AttributeSet attrs) {
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceView);
-        mDefaultValue = ta.getString(R.styleable.PreferenceView_DefaultValue);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceItemView);
+        mDefaultValue = ta.getString(R.styleable.PreferenceItemView_DefaultValue);
         ta.recycle();
         return mDefaultValue;
     }
@@ -57,20 +57,22 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
         setClickable(false);
         mEditText = (EditText) findViewById(R.id.id_pre_edit);
         mButton = (Button) findViewById(R.id.id_pre_btn_set);
-
-        mText = mSharedPreferences.getString(getKey(),null);
-        if(!mSharedPreferences.contains(getKey())) {
-            mEditText.setText(mDefaultValue);
-        } else {
-            mEditText.setText(mText);
-        }
+        updateKeyValue();
         mButton.setOnClickListener(this);
         mEditText.setOnEditorActionListener(this);
         mEditText.setVisibility(VISIBLE);
         mButton.setVisibility(VISIBLE);
 //        mEditText.addTextChangedListener(this);
     }
-
+    @Override
+    protected void updateKeyValue() {
+        mText = mSharedPreferences.getString(getKey(),null);
+        if(!mSharedPreferences.contains(getKey())) {
+            mEditText.setText(mDefaultValue);
+        } else {
+            mEditText.setText(mText);
+        }
+    }
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -154,7 +156,7 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
             Log.d(TAG,"PUT EDIT value" + value);
             mEditor.putString(getKey(),value);
             tryCommit(mEditor);
-        };
+        }
     }
 
     @Override

@@ -42,8 +42,8 @@ public class ColorPickerPreferenceView extends PreferenceItemView implements Col
         init(attrs);
     }
     private int getDefaultValue(AttributeSet attrs) {
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceView);
-        mDefaultValue = ta.getInt(R.styleable.PreferenceView_DefaultValue,Color.BLACK);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceItemView);
+        mDefaultValue = ta.getInt(R.styleable.PreferenceItemView_DefaultValue,Color.BLACK);
         Log.d(TAG,"mDefaultValue" + mDefaultValue);
         ta.recycle();
         return mDefaultValue;
@@ -65,7 +65,16 @@ public class ColorPickerPreferenceView extends PreferenceItemView implements Col
         mPreviewG.setVisibility(VISIBLE);
         mColorPickerImagePreview.setOnColorChangedListener(this);
     }
-
+    @Override
+    protected void updateKeyValue() {
+        if (!mSharedPreferences.contains(getKey())) {
+            mColorPickerImagePreview.updateColor(mDefaultValue);
+//            onColorChanged(mDefaultValue);
+        } else {
+            int color = mSharedPreferences.getInt(getKey(),Color.BLACK);
+            mColorPickerImagePreview.updateColor(color);
+        }
+    }
     @Override
     public void onColorChanged(int color) {
         Log.d(TAG,"new Color #" + Integer.toHexString(color));

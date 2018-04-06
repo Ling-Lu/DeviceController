@@ -37,7 +37,7 @@ public class CardCategoryPreferenceView extends CardView {
         mCardView = (CardView) inflate(getContext(), R.layout.preference_cardview_category,null);
         mContent = new PreferenceCategoryView(getContext(),attrs);
         mMargins = (int) getResources().getDimension(R.dimen.preference_card_view_margins);
-        mLayoutParams = (LayoutParams) new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+        mLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         mLayoutParams.setMargins(mMargins, mMargins, mMargins, mMargins);
         mChildren.add(mCardView.hashCode());
         mChildren.add(mContent.hashCode());
@@ -59,7 +59,6 @@ public class CardCategoryPreferenceView extends CardView {
     @Override
     public void onViewAdded(View child) {
         super.onViewAdded(child);
-        Log.d(TAG, "onViewAdded: ");
         if(child.hashCode() != mContent.hashCode()) {
             if(mChildren.contains(child.hashCode()) == false) {
                 removeView(child);
@@ -77,12 +76,10 @@ public class CardCategoryPreferenceView extends CardView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Log.d(TAG, "onAttachedToWindow: ");
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        Log.d(TAG, "onFinishInflate: ");
     }
 }
