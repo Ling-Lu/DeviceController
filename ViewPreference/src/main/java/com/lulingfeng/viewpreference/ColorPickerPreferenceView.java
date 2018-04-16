@@ -50,7 +50,12 @@ public class ColorPickerPreferenceView extends PreferenceItemView implements Col
     }
     private void init(AttributeSet attrs) {
         getDefaultValue(attrs);
-        updateKeyValue();
+        int color = mSharedPreferences.getInt(getKey(),Color.BLACK);
+        if (!mSharedPreferences.contains(getKey())) {
+            mColorPickerImagePreview = new ColorPickerImagePreview(getContext(),mDefaultValue);
+        } else {
+            mColorPickerImagePreview = new ColorPickerImagePreview(getContext(),color);
+        }
         mColorPickerImagePreview.setAlphaSliderEnabled(true);
         mColorPickerImagePreview.setHexValueEnabled(true);
         mPreviewG = (ViewGroup) findViewById(R.id.id_pre_preview);
