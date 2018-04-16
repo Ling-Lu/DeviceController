@@ -34,6 +34,7 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
     protected String mSummaryStr;
     protected String mKeyStr;
     protected boolean mIsEnable;
+    private boolean mIsFixedKey;
     private OnPreferenceChangedListener mOnPreferenceChangedListener;
     public PreferenceItemView(Context context) {
         super(context);
@@ -60,14 +61,14 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         mSummaryStr = ta.getString(R.styleable.PreferenceItemView_Summary);
         mKeyStr = ta.getString(R.styleable.PreferenceItemView_Key);
         mIsEnable = ta.getBoolean(R.styleable.PreferenceItemView_Enable,true);
+        mIsFixedKey = ta.getBoolean(R.styleable.PreferenceItemView_FixedKey,true);
         ta.recycle();
     }
     private void init(Context context,AttributeSet attrs) {
         mContext = context;
         getAttrs(attrs);
         inflate(mContext, R.layout.preference_item,this);
-        mKey = (String) getTag();
-        if (!TextUtils.isEmpty(mKeyStr)) mKey = mKeyStr;
+        if (!TextUtils.isEmpty(mKeyStr) && mIsFixedKey) mKey = mKeyStr;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
         mEditor = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
 

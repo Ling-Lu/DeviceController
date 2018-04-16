@@ -87,18 +87,10 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if(event.getAction() == KeyEvent.ACTION_UP) {
             if(actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                if(TextUtils.equals(mEditText.getText().toString(),mText) == false) {
-                    mText = mEditText.getText().toString();
-                    if (preferenceChange(this,mText)) {
-                        mEditor.putString(getKey(),mText);
-                        tryCommit(mEditor);
-                    }
-                } else {
-                    mEditText.setText(mText);
-                }
+                onEditTextChanged();
             }
         }
-        return false;
+        return true;
     }
     protected boolean onEditTextChanged() {
         String text = mEditText.getText().toString();

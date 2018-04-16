@@ -47,11 +47,7 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
         getDefaultValue(attrs);
         mSwitch = (Switch) findViewById(R.id.id_pre_switch);
         mSwitch.setVisibility(VISIBLE);
-        if (mSharedPreferences.contains(getKey())) {
-            setChecked(mSharedPreferences.getBoolean(getKey(), false));
-        } else {
-            setChecked(mDefaultValue);
-        }
+        updateKeyValue();
         mSwitch.setOnCheckedChangeListener(this);
         setSummary(isChecked() ? mContext.getString(R.string.on) : mContext.getString(R.string.off));
         this.setOnClickListener(this);

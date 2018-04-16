@@ -40,10 +40,16 @@ public class SwitchEditPreferenceView extends EditPreferenceView implements Comp
         mSwitch = (Switch) findViewById(R.id.id_pre_switch);
         mSwitch.setVisibility(VISIBLE);
         mButton.setVisibility(GONE);
-        setChecked(mSharedPreferences.getBoolean(mSwitch_Key, false));
+        updateKeyValue();
 
         mSwitch.setOnCheckedChangeListener(this);
         this.setOnClickListener(this);
+    }
+
+    @Override
+    protected void updateKeyValue() {
+        super.updateKeyValue();
+        setChecked(mSharedPreferences.getBoolean(mSwitch_Key, false));
     }
 
     @Override
@@ -76,7 +82,9 @@ public class SwitchEditPreferenceView extends EditPreferenceView implements Comp
         return mSwitch.isChecked();
     }
     public void setChecked(boolean isChecked) {
-        mSwitch.setChecked(isChecked);
+        if(mSwitch != null) {
+            mSwitch.setChecked(isChecked);
+        }
     }
     @Override
     public void onClick(View v) {

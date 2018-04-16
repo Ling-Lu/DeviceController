@@ -4,6 +4,7 @@
         <attr name="Title" format="string"/>
         <attr name="Summary" format="string" />
         <attr name="Key" format="string" />
+        <attr name="FixedKey" format="boolean" />
         <attr name="DefaultValue" format="boolean|string|reference|integer|dimension" />
         <attr name="Enable" format="boolean"/>
         <attr name="Margins" format="dimension" />
