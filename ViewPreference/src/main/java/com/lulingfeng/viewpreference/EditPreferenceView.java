@@ -69,6 +69,9 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
         mText = mSharedPreferences.getString(getKey(),null);
         if(!mSharedPreferences.contains(getKey())) {
             mEditText.setText(mDefaultValue);
+            if(getKey() != null) {
+                onEditTextChanged();
+            }
         } else {
             mEditText.setText(mText);
         }
