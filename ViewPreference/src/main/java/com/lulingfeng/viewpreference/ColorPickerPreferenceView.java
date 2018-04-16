@@ -53,6 +53,10 @@ public class ColorPickerPreferenceView extends PreferenceItemView implements Col
         int color = mSharedPreferences.getInt(getKey(),Color.BLACK);
         if (!mSharedPreferences.contains(getKey())) {
             mColorPickerImagePreview = new ColorPickerImagePreview(getContext(),mDefaultValue);
+            if(getKey() != null) {
+                onColorChanged(mDefaultValue);
+                mColorPickerImagePreview.setOnColorChangedListener(this);
+            }
         } else {
             mColorPickerImagePreview = new ColorPickerImagePreview(getContext(),color);
         }
