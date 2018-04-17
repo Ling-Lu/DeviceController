@@ -54,15 +54,15 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
 
     @Override
     protected void updateKeyValue() {
-        if (mSharedPreferences.contains(getKey())) {
-            mDefaultValue = mSharedPreferences.getBoolean(getKey(), false);
-            setChecked(mDefaultValue);
-        } else {
-            if(getKey() != null) {
-                onCheckedChanged(mSwitch,mDefaultValue);
-                mSwitch.setOnCheckedChangeListener(this);
+        mSwitch.setOnCheckedChangeListener(null);
+        if(getKey() != null) {
+            if (mSharedPreferences.contains(getKey())) {
+                setChecked(mSharedPreferences.getBoolean(getKey(), false));
+            } else {
+                onCheckedChanged(mSwitch, mDefaultValue);
             }
         }
+        mSwitch.setOnCheckedChangeListener(this);
     }
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

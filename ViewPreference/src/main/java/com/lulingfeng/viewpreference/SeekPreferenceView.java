@@ -51,15 +51,16 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
     }
     @Override
     protected void updateKeyValue() {
-        if (mSharedPreferences.contains(getKey())) {
-            mBubbleSeekBar.setProgress(mSharedPreferences.getInt(getKey(),1));
-        } else {
-            mBubbleSeekBar.setProgress(mDefaultValue);
-            if(getKey() != null) {
-                onProgressChanged(mBubbleSeekBar,mDefaultValue,0,false);
-                mBubbleSeekBar.setOnProgressChangedListener(this);
+        mBubbleSeekBar.setOnProgressChangedListener(null);
+        if(getKey() != null) {
+            if (mSharedPreferences.contains(getKey())) {
+                mBubbleSeekBar.setProgress(mSharedPreferences.getInt(getKey(), 1));
+            } else {
+                mBubbleSeekBar.setProgress(mDefaultValue);
+                onProgressChanged(mBubbleSeekBar, mDefaultValue, 0, false);
             }
         }
+        mBubbleSeekBar.setOnProgressChangedListener(this);
     }
     public int getValue() {
         return mBubbleSeekBar.getProgress();

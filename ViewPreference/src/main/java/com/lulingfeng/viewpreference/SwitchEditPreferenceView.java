@@ -1,6 +1,7 @@
 package com.lulingfeng.viewpreference;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
@@ -17,6 +18,7 @@ public class SwitchEditPreferenceView extends EditPreferenceView implements Comp
     private String mSwitch_Key;
     private String SWITCH_SUFFIX_KEY = "_preference_view_switch";
     private OnSwitchChangedListener mOnSwitchChangeListener;
+    private boolean mDefaultValue;
     public SwitchEditPreferenceView(Context context) {
         this(context,null);
     }
@@ -35,21 +37,36 @@ public class SwitchEditPreferenceView extends EditPreferenceView implements Comp
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }
+    private boolean getDefaultValue(AttributeSet attrs) {
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceItemView);
+        mDefaultValue = ta.getBoolean(R.styleable.PreferenceItemView_DefaultValue,false);
+        ta.recycle();
+        return mDefaultValue;
+    }
     private void init(AttributeSet attributeSet) {
+        getDefaultValue(attributeSet);
         mSwitch_Key = getKey() + SWITCH_SUFFIX_KEY;
         mSwitch = (Switch) findViewById(R.id.id_pre_switch);
         mSwitch.setVisibility(VISIBLE);
         mButton.setVisibility(GONE);
         updateKeyValue();
 
-        mSwitch.setOnCheckedChangeListener(this);
         this.setOnClickListener(this);
     }
 
     @Override
     protected void updateKeyValue() {
         super.updateKeyValue();
-        setChecked(mSharedPreferences.getBoolean(mSwitch_Key, false));
+        mSwitch.setOnCheckedChangeListener(null);
+        if(getKey() != null) {
+            if (!mSharedPreferences.contains(mSwitch_Key)) {
+                setChecked(mDefaultValue);
+                onCheckedChanged(mSwitch,mDefaultValue);
+            } else {
+                setChecked(mSharedPreferences.getBoolean(mSwitch_Key, false));
+            }
+        }
+        mSwitch.setOnCheckedChangeListener(this);
     }
 
     @Override

@@ -55,11 +55,11 @@ public class ColorPickerPreferenceView extends PreferenceItemView implements Col
             mColorPickerImagePreview = new ColorPickerImagePreview(getContext(),mDefaultValue);
             if(getKey() != null) {
                 onColorChanged(mDefaultValue);
-                mColorPickerImagePreview.setOnColorChangedListener(this);
             }
         } else {
             mColorPickerImagePreview = new ColorPickerImagePreview(getContext(),color);
         }
+        mColorPickerImagePreview.setOnColorChangedListener(this);
         mColorPickerImagePreview.setAlphaSliderEnabled(true);
         mColorPickerImagePreview.setHexValueEnabled(true);
         mPreviewG = (ViewGroup) findViewById(R.id.id_pre_preview);
@@ -69,16 +69,17 @@ public class ColorPickerPreferenceView extends PreferenceItemView implements Col
     }
     @Override
     protected void updateKeyValue() {
-        if (!mSharedPreferences.contains(getKey())) {
-            mColorPickerImagePreview.updateColor(mDefaultValue);
-            if(getKey() != null) {
+        mColorPickerImagePreview.setOnColorChangedListener(null);
+        if(getKey() != null) {
+            if (!mSharedPreferences.contains(getKey())) {
+                mColorPickerImagePreview.updateColor(mDefaultValue);
                 onColorChanged(mDefaultValue);
-                mColorPickerImagePreview.setOnColorChangedListener(this);
+            } else {
+                int color = mSharedPreferences.getInt(getKey(), Color.BLACK);
+                mColorPickerImagePreview.updateColor(color);
             }
-        } else {
-            int color = mSharedPreferences.getInt(getKey(),Color.BLACK);
-            mColorPickerImagePreview.updateColor(color);
         }
+        mColorPickerImagePreview.setOnColorChangedListener(this);
     }
     @Override
     public void onColorChanged(int color) {
