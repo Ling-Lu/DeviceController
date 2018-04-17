@@ -71,9 +71,6 @@ public class SwitchEditPreferenceView extends EditPreferenceView implements Comp
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if(buttonView != null && !buttonView.isPressed()) {
-            return;
-        }
         if(mOnSwitchChangeListener == null
                 || (mOnSwitchChangeListener != null && mOnSwitchChangeListener.onSwitchChanged(mSwitch_Key,isChecked))) {
             mEditor.putBoolean(mSwitch_Key,isChecked);
