@@ -66,6 +66,9 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
     }
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if(buttonView != null && !buttonView.isPressed()) {
+            return;
+        }
         if (preferenceChange(this,isChecked)) {
             mEditor.putBoolean(getKey(),isChecked);
             tryCommit(mEditor);
