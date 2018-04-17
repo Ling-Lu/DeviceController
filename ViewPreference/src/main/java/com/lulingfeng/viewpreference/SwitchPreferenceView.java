@@ -61,6 +61,7 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
             } else {
                 mSwitch.setPressed(true);
                 onCheckedChanged(mSwitch, mDefaultValue);
+                mSwitch.setPressed(false);
             }
         }
         mSwitch.setOnCheckedChangeListener(this);
