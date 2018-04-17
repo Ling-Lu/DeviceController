@@ -85,7 +85,9 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
         return mSwitch.isChecked();
     }
     public void setChecked(boolean isChecked) {
-        mSwitch.setChecked(isChecked);
+        if(mSwitch.isChecked() != isChecked) {
+            mSwitch.setChecked(isChecked);
+        }
         setSummary(isChecked ? mContext.getString(R.string.on) : mContext.getString(R.string.off));
     }
     @Override
