@@ -97,9 +97,7 @@ public class SwitchEditPreferenceView extends EditPreferenceView implements Comp
     }
     public void setChecked(boolean isChecked) {
         if(mSwitch != null) {
-            if(mSwitch.isChecked() != isChecked) {
-                mSwitch.setChecked(isChecked);
-            }
+            mSwitch.setChecked(isChecked);
         }
     }
     @Override
