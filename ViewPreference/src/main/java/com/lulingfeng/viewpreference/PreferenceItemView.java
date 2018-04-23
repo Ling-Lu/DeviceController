@@ -36,6 +36,7 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
     protected String mKeyStr;
     protected boolean mIsEnable;
     private boolean mIsFixedKey;
+    private int mIconResId;
     private OnPreferenceChangedListener mOnPreferenceChangedListener;
     public PreferenceItemView(Context context) {
         super(context);
@@ -63,6 +64,7 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         mKeyStr = ta.getString(R.styleable.PreferenceItemView_Key);
         mIsEnable = ta.getBoolean(R.styleable.PreferenceItemView_Enable,true);
         mIsFixedKey = ta.getBoolean(R.styleable.PreferenceItemView_FixedKey,true);
+        mIconResId = ta.getResourceId(R.styleable.PreferenceItemView_Icon,0);
         ta.recycle();
     }
     private void init(Context context,AttributeSet attrs) {
@@ -78,6 +80,7 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         mTitleTv = (TextView) findViewById(R.id.id_pre_title);
         mSummaryTv = (TextView) findViewById(R.id.id_pre_summary);
 
+        setIcon(mIconResId);
         setTitle(mTitleStr);
         setSummary(mSummaryStr);
 
