@@ -57,17 +57,19 @@ public class SwitchEditPreferenceView extends EditPreferenceView implements Comp
     @Override
     protected void updateKeyValue() {
         super.updateKeyValue();
-        mSwitch.setOnCheckedChangeListener(null);
-        if(getKey() != null) {
-            if (!mSharedPreferences.contains(mSwitch_Key)) {
-                setChecked(mDefaultValue);
-                mSwitch.setPressed(true);
-                onCheckedChanged(mSwitch,mDefaultValue);
-            } else {
-                setChecked(mSharedPreferences.getBoolean(mSwitch_Key, false));
+        if(mSwitch != null) {
+            mSwitch.setOnCheckedChangeListener(null);
+            if (getKey() != null) {
+                if (!mSharedPreferences.contains(mSwitch_Key)) {
+                    setChecked(mDefaultValue);
+                    mSwitch.setPressed(true);
+                    onCheckedChanged(mSwitch, mDefaultValue);
+                } else {
+                    setChecked(mSharedPreferences.getBoolean(mSwitch_Key, false));
+                }
             }
+            mSwitch.setOnCheckedChangeListener(this);
         }
-        mSwitch.setOnCheckedChangeListener(this);
     }
 
     @Override

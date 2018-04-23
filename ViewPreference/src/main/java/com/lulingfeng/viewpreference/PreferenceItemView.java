@@ -78,14 +78,15 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         mTitleTv = (TextView) findViewById(R.id.id_pre_title);
         mSummaryTv = (TextView) findViewById(R.id.id_pre_summary);
 
+        setTitle(mTitleStr);
+        setSummary(mSummaryStr);
+
         this.setOnClickListener(this);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        setTitle(mTitleStr);
-        setSummary(mSummaryStr);
         setEnabled(mIsEnable);
     }
 
