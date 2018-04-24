@@ -4,7 +4,7 @@
     <dimen name="preference_padding_top">6dp</dimen>
     <dimen name="preference_margin_end">15dp</dimen>
     <dimen name="preference_margin_start">15dp</dimen>
-    <dimen name="preference_icon_size">30dp</dimen>
+    <dimen name="preference_icon_size">35dp</dimen>
     <dimen name="preference_edit_size">35dp</dimen>
     <dimen name="preference_button_width">55dp</dimen>
     <dimen name="preference_icon_margin_start">10dp</dimen>

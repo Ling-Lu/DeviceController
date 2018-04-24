@@ -19,8 +19,6 @@
         android:layout_width="@dimen/preference_icon_size"
         android:layout_height="@dimen/preference_icon_size"
         android:background="@android:color/transparent"
-        android:layout_marginLeft="@dimen/preference_icon_margin_start"
-        android:layout_marginStart="@dimen/preference_icon_margin_start"
         android:layout_marginEnd="@dimen/preference_icon_margin_end"
         android:layout_marginRight="@dimen/preference_icon_margin_end"
         android:visibility="gone"
