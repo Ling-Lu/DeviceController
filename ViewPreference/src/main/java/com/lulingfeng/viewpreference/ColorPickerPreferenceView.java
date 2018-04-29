@@ -68,7 +68,7 @@ public class ColorPickerPreferenceView extends PreferenceItemView implements Col
         mPreviewG.setVisibility(VISIBLE);
     }
     @Override
-    protected void updateKeyValue() {
+    public void updateKeyValue() {
         mColorPickerImagePreview.setOnColorChangedListener(null);
         if(getKey() != null) {
             if (!mSharedPreferences.contains(getKey())) {

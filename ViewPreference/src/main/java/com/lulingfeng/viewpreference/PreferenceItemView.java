@@ -150,7 +150,7 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         mKey = key;
         updateKeyValue();
     }
-    protected void updateKeyValue(){}
+    public void updateKeyValue(){}
     public void tryCommit(SharedPreferences.Editor editor) {
         try {
             editor.apply();

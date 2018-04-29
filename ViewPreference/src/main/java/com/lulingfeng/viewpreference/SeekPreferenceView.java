@@ -50,7 +50,7 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
         setSummary(String.valueOf(mDefaultValue));
     }
     @Override
-    protected void updateKeyValue() {
+    public void updateKeyValue() {
         mBubbleSeekBar.setOnProgressChangedListener(null);
         if(getKey() != null) {
             if (mSharedPreferences.contains(getKey())) {

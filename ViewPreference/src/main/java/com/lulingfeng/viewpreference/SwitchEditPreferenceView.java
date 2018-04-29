@@ -55,7 +55,7 @@ public class SwitchEditPreferenceView extends EditPreferenceView implements Comp
     }
 
     @Override
-    protected void updateKeyValue() {
+    public void updateKeyValue() {
         super.updateKeyValue();
         if(mSwitch != null) {
             mSwitch.setOnCheckedChangeListener(null);

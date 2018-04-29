@@ -53,7 +53,7 @@ public class SwitchPreferenceView extends PreferenceItemView implements Compound
     }
 
     @Override
-    protected void updateKeyValue() {
+    public void updateKeyValue() {
         mSwitch.setOnCheckedChangeListener(null);
         if(getKey() != null) {
             if (mSharedPreferences.contains(getKey())) {

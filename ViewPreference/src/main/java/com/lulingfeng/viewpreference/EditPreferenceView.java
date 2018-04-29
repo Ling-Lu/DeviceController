@@ -65,7 +65,7 @@ public class EditPreferenceView extends PreferenceItemView implements TextView.O
 //        mEditText.addTextChangedListener(this);
     }
     @Override
-    protected void updateKeyValue() {
+    public void updateKeyValue() {
         mText = mSharedPreferences.getString(getKey(),null);
         if(!mSharedPreferences.contains(getKey())) {
             mEditText.setText(mDefaultValue);
