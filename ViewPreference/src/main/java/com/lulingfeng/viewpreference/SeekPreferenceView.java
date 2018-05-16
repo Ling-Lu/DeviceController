@@ -47,7 +47,7 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
         mBubbleSeekBar = (BubbleSeekBar) findViewById(R.id.id_pre_seek_bar);
         mBubbleSeekBar.setVisibility(VISIBLE);
         updateKeyValue();
-        setSummary(String.valueOf(mDefaultValue));
+        setSummary(mSharedPreferences.getInt(getKey(), mDefaultValue));
     }
     @Override
     public void updateKeyValue() {
