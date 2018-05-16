@@ -54,7 +54,9 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
         mBubbleSeekBar.setOnProgressChangedListener(null);
         if(getKey() != null) {
             if (mSharedPreferences.contains(getKey())) {
-                mBubbleSeekBar.setProgress(mSharedPreferences.getInt(getKey(), 1));
+                int value = mSharedPreferences.getInt(getKey(), mDefaultValue);
+                mBubbleSeekBar.setProgress(value);
+                setSummary(value);
             } else {
                 mBubbleSeekBar.setProgress(mDefaultValue);
                 onProgressChanged(mBubbleSeekBar, mDefaultValue, 0, false);
