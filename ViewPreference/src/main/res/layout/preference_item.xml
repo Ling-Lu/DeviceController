@@ -75,7 +75,7 @@
             android:alpha="0.5"
             app:bsb_max="50"
             app:bsb_min="1"
-            app:bsb_section_count="5"
+            app:bsb_section_count="1"
             app:bsb_progress="10"
             app:bsb_touch_to_seek="true"
             app:bsb_hide_bubble="true"

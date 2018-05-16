@@ -92,4 +92,7 @@ public class SeekPreferenceView extends PreferenceItemView implements BubbleSeek
     public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int i, float v, boolean b) {
 
     }
+    public BubbleSeekBar getSeekBar() {
+        return mBubbleSeekBar;
+    }
 }
