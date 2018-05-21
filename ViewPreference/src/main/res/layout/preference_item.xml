@@ -77,7 +77,6 @@
             app:bsb_min="1"
             app:bsb_section_count="1"
             app:bsb_progress="10"
-            app:bsb_touch_to_seek="true"
             app:bsb_hide_bubble="true"
             app:bsb_show_section_mark="true"
             app:bsb_show_section_text="true"
