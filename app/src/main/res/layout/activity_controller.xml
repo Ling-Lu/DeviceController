@@ -100,6 +100,13 @@
                     android:layout_height="wrap_content"
                     app:Title="Client ID"
                     app:Summary="(none)"/>
+                <com.lulingfeng.viewpreference.SeekPreferenceView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:Title="test Title"
+                    app:Summary="Test Summary">
+
+                </com.lulingfeng.viewpreference.SeekPreferenceView>
 
             </com.lulingfeng.viewpreference.CardCategoryPreferenceView>
         </LinearLayout>
