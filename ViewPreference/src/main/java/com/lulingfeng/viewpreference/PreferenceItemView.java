@@ -162,11 +162,9 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         }
     }
     public String getKey() {
-        Log.d(TAG, "getKey: " + mKey);
         return mKey;
     }
     public String getFixedKey() {
-        Log.d(TAG, "getKey: " + mKey);
         return mKeyStr;
     }
     @Override
