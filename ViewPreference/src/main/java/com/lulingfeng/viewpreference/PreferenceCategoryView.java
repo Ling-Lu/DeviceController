@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ import android.widget.TextView;
  */
 
 public class PreferenceCategoryView extends LinearLayout {
-    private final static String TAG = PreferenceItemView.class.getSimpleName();
+    private final static String TAG = PreferenceCategoryView.class.getSimpleName();
     private String mTitleStr;
     private String mSummaryStr;
     private TextView mTitleTextView;
@@ -69,7 +70,6 @@ public class PreferenceCategoryView extends LinearLayout {
         } else {
             mTitleTextView.setVisibility(GONE);
         }
-        updateDivider();
     }
     public void setSummary(String summary) {
         mSummaryTextView.setText(summary);
@@ -78,13 +78,27 @@ public class PreferenceCategoryView extends LinearLayout {
         } else {
             mSummaryTextView.setVisibility(GONE);
         }
-        updateDivider();
     }
 
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (changed) {
+            updateDivider();
+        }
+    }
     private void updateDivider() {
-        if (isCategoryShouldShow()) {
+        if (isDividerShouldShow()) {
             mDivider.setVisibility(VISIBLE);
         } else {
+
+            int marginBottom = (int) getResources().getDimension(R.dimen.preference_category_margin_top);
+            if (mSummaryTextView.getVisibility() == VISIBLE || mTitleTextView.getVisibility() == VISIBLE) {
+                marginBottom = (int) (getResources().getDimension(R.dimen.preference_category_divider_margin_top) + getResources().getDimension(R.dimen.preference_category_margin_top));
+            }
+            MarginLayoutParams marginLayoutParams = (MarginLayoutParams) getLayoutParams();
+            marginLayoutParams.setMargins(marginLayoutParams.leftMargin,marginLayoutParams.topMargin,marginLayoutParams.rightMargin
+                    , marginBottom);
             mDivider.setVisibility(GONE);
         }
     }
@@ -99,8 +113,17 @@ public class PreferenceCategoryView extends LinearLayout {
         super.setEnabled(enabled);
         setChildrenEnable(enabled);
     }
-    private boolean isCategoryShouldShow() {
-        return mSummaryTextView.getVisibility() == VISIBLE || mTitleTextView.getVisibility() == VISIBLE;
+    private boolean hasVisiblePreferenceItem() {
+        int childCnt = getChildCount();
+        for (int i = 1; i < childCnt; i ++) {
+            if (getChildAt(i).getVisibility() == VISIBLE) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean isDividerShouldShow() {
+        return (mSummaryTextView.getVisibility() == VISIBLE || mTitleTextView.getVisibility() == VISIBLE) && hasVisiblePreferenceItem();
     }
     @Override
     protected void onAttachedToWindow() {

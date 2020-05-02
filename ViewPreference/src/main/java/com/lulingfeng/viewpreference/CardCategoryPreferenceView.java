@@ -68,6 +68,12 @@ public class CardCategoryPreferenceView extends CardView {
     }
 
     @Override
+    public void removeView(View view) {
+        super.removeView(view);
+        mContent.removeView(view);
+    }
+
+    @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         mContent.setEnabled(enabled);

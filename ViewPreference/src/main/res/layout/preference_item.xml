@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:minHeight="@dimen/preference_min_height"
-    android:gravity="center_vertical"
     android:background="?android:attr/selectableItemBackground"
     android:padding="@dimen/preference_padding_top"
     android:layout_marginStart="@dimen/preference_margin_start"

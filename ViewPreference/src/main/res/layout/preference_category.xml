@@ -13,7 +13,6 @@
     >
 
     <LinearLayout
-        android:layout_marginBottom="@dimen/preference_category_margin_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -28,6 +27,7 @@
             android:visibility="gone"/>
     </LinearLayout>
     <View android:id="@+id/id_pre_category_divider"
+        android:layout_marginTop="@dimen/preference_category_divider_margin_top"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"/>
