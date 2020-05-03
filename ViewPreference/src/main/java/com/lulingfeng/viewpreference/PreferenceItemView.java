@@ -3,6 +3,7 @@ package com.lulingfeng.viewpreference;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -37,6 +38,7 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
     protected boolean mIsEnable;
     private boolean mIsFixedKey;
     private int mIconResId;
+    private int mTitleColor,mSummaryColor;
     private OnPreferenceChangedListener mOnPreferenceChangedListener;
     public PreferenceItemView(Context context) {
         super(context);
@@ -65,6 +67,8 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         mIsEnable = ta.getBoolean(R.styleable.PreferenceItemView_Enable,true);
         mIsFixedKey = ta.getBoolean(R.styleable.PreferenceItemView_FixedKey,true);
         mIconResId = ta.getResourceId(R.styleable.PreferenceItemView_Icon,0);
+        mTitleColor = ta.getColor(R.styleable.PreferenceItemView_TitleColor, Color.TRANSPARENT);
+        mSummaryColor = ta.getColor(R.styleable.PreferenceItemView_SummaryColor, Color.TRANSPARENT);
         ta.recycle();
     }
     private void init(Context context,AttributeSet attrs) {
@@ -81,6 +85,12 @@ public class PreferenceItemView extends RelativeLayout implements View.OnClickLi
         mSummaryTv = (TextView) findViewById(R.id.id_pre_summary);
 
         setIcon(mIconResId);
+        if (mTitleColor != Color.TRANSPARENT) {
+            mTitleTv.setTextColor(mTitleColor);
+        }
+        if(mSummaryColor != Color.TRANSPARENT) {
+            mSummaryTv.setTextColor(mSummaryColor);
+        }
         setTitle(mTitleStr);
         setSummary(mSummaryStr);
 

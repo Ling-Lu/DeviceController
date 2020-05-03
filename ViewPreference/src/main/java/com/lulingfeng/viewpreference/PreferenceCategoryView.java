@@ -3,6 +3,7 @@ package com.lulingfeng.viewpreference;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -21,6 +22,7 @@ public class PreferenceCategoryView extends LinearLayout {
     private String mSummaryStr;
     private TextView mTitleTextView;
     private TextView mSummaryTextView;
+    private int mTitleColor,mSummaryColor;
     private View mDivider;
     public PreferenceCategoryView(Context context) {
         super(context);
@@ -50,6 +52,8 @@ public class PreferenceCategoryView extends LinearLayout {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceItemView);
         mTitleStr = ta.getString(R.styleable.PreferenceItemView_Title);
         mSummaryStr = ta.getString(R.styleable.PreferenceItemView_Summary);
+        mTitleColor = ta.getColor(R.styleable.PreferenceItemView_TitleColor, Color.TRANSPARENT);
+        mSummaryColor = ta.getColor(R.styleable.PreferenceItemView_SummaryColor, Color.TRANSPARENT);
         ta.recycle();
     }
     private void init () {
@@ -59,6 +63,12 @@ public class PreferenceCategoryView extends LinearLayout {
         mSummaryTextView = (TextView) findViewById(R.id.id_pre_category_summary);
         mDivider = findViewById(R.id.id_pre_category_divider);
 
+        if (mTitleColor != Color.TRANSPARENT) {
+            mTitleTextView.setTextColor(mTitleColor);
+        }
+        if(mSummaryColor != Color.TRANSPARENT) {
+            mSummaryTextView.setTextColor(mSummaryColor);
+        }
         setTitle(mTitleStr);
         setSummary(mSummaryStr);
     }

@@ -2,12 +2,15 @@
 <resources>
     <declare-styleable name="PreferenceItemView">
         <attr name="Title" format="string"/>
+        <attr name="TitleColor" format="reference|color" />
         <attr name="Summary" format="string" />
+        <attr name="SummaryColor" format="reference|color" />
         <attr name="Key" format="string" />
         <attr name="FixedKey" format="boolean" />
         <attr name="DefaultValue" format="boolean|string|reference|integer|dimension" />
         <attr name="Enable" format="boolean"/>
         <attr name="Margins" format="dimension" />
         <attr name="Icon" format="reference" />
+
     </declare-styleable>
 </resources>
