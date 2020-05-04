@@ -1,9 +1,9 @@
 package com.lulingfeng.viewpreference;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class CardCategoryPreferenceView extends CardView {
     CardView mCardView;
     List<Integer> mChildren = new ArrayList<>();
     LayoutParams mLayoutParams;
-    int mMargins = 0;
+    float mMargins = 0, mCardCornerRadius = 0;
     public CardCategoryPreferenceView(Context context) {
         this(context,null);
     }
@@ -36,14 +36,25 @@ public class CardCategoryPreferenceView extends CardView {
     private void init(AttributeSet attrs) {
         mCardView = (CardView) inflate(getContext(), R.layout.preference_cardview_category,null);
         mContent = new PreferenceCategoryView(getContext(),attrs);
-        mMargins = (int) getResources().getDimension(R.dimen.preference_card_view_margins);
-        mLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
-        mLayoutParams.setMargins(mMargins, mMargins, mMargins, mMargins);
+        initCardView(attrs);
         mChildren.add(mCardView.hashCode());
         mChildren.add(mContent.hashCode());
 
         addView(mCardView,mLayoutParams);
         mCardView.addView(mContent);
+    }
+    private void initCardView(AttributeSet attrs) {
+        mMargins = getResources().getDimension(R.dimen.preference_card_view_margins);
+        mCardCornerRadius = getResources().getDisplayMetrics().density * 16;
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PreferenceItemView);
+        mMargins = ta.getDimension(R.styleable.PreferenceItemView_Margins,mMargins);
+        mCardCornerRadius = ta.getDimension(R.styleable.PreferenceItemView_CardCornerRadius, mCardCornerRadius);
+        ta.recycle();
+
+        int margins = (int) mMargins;
+        mLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+        mLayoutParams.setMargins(margins, margins, margins, margins);
+        mCardView.setRadius(mCardCornerRadius);
     }
 
     @Override

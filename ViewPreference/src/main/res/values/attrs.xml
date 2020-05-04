@@ -10,6 +10,7 @@
         <attr name="DefaultValue" format="boolean|string|reference|integer|dimension" />
         <attr name="Enable" format="boolean"/>
         <attr name="Margins" format="dimension" />
+        <attr name="CardCornerRadius" format="dimension" />
         <attr name="Icon" format="reference" />
 
     </declare-styleable>
