@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 public class CardCategoryFoldPreferenceView extends CardCategoryPreferenceView {
     private ImageView mFold;
+    private boolean mIsFoldEnabled;
     public CardCategoryFoldPreferenceView(Context context) {
         this(context,null);
     }
@@ -17,6 +18,13 @@ public class CardCategoryFoldPreferenceView extends CardCategoryPreferenceView {
     public CardCategoryFoldPreferenceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mFold = (ImageView) findViewById(R.id.id_pre_category_extend);
-        mFold.setVisibility(VISIBLE);
+        enableFold(true);
+    }
+    public void enableFold(boolean enable) {
+        mIsFoldEnabled = enable;
+        mFold.setVisibility(enable ? VISIBLE : GONE);
+    }
+    public boolean isFoldEnabled() {
+        return mIsFoldEnabled;
     }
 }
