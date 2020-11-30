@@ -17,10 +17,12 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.igexin.sdk.PushManager;
+import com.lulingfeng.viewpreference.CardCategoryFoldPreferenceView;
 import com.lulingfeng.viewpreference.CardCategoryPreferenceView;
 import com.lulingfeng.viewpreference.EditPreferenceView;
 import com.lulingfeng.viewpreference.PreferenceItemView;
@@ -55,6 +57,7 @@ public class ControllerActivity extends AppCompatActivity
     private PreferenceItemView mVCurrentGear;
     private CardCategoryPreferenceView mVOrders;
     private CardCategoryPreferenceView mVRemoteStates;
+    CardCategoryFoldPreferenceView mCardCategoryFoldPreferenceView;
     private SwitchEditPreferenceView mVWarning;
     private Handler mHandler = new Handler();
     private String mAppKey = "";
@@ -131,6 +134,18 @@ public class ControllerActivity extends AppCompatActivity
         mVOrders = (CardCategoryPreferenceView) findViewById(R.id.id_orders);
         mVRemoteStates = (CardCategoryPreferenceView) findViewById(R.id.id_remote_states);
         mVWarning = (SwitchEditPreferenceView) findViewById(R.id.id_warning);
+
+        mCardCategoryFoldPreferenceView = (CardCategoryFoldPreferenceView) findViewById(R.id.id_fold);
+        mCardCategoryFoldPreferenceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean enable = !mCardCategoryFoldPreferenceView.isFoldEnabled();
+                mCardCategoryFoldPreferenceView.enableFold(enable);
+                SwitchPreferenceView switchPreferenceView = (SwitchPreferenceView) findViewById(R.id.id_custom_text_color);
+                switchPreferenceView.setVisibility(enable ? View.GONE : View.VISIBLE);
+                switchPreferenceView.setSummary("Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world ");
+            }
+        });
 
         mVPowerSwitch.setOnPreferenceChangeListener(this);
         mVChangeClientId.setOnPreferenceChangeListener(this);

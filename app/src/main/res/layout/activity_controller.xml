@@ -19,10 +19,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/id_fold"
                 app:Title="Title"
-                app:Summary="Summaryfbsdhgfhdsgfasghtresgfdssdfreqaghrsgvfdsfagfraga">
+                app:Summary="Summaryfbsdhgfhdsgfasghtresgfdssdfreqaghrsgvfdsfagfraga"
+                app:Margins="5dp"
+                app:CardCornerRadius="16dp">
                 <com.lulingfeng.viewpreference.SwitchPreferenceView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/id_custom_text_color"
+                    android:visibility="gone"
                     app:Title="Title sub"
                     app:TitleColor="@android:color/holo_blue_light"
                     app:SummaryColor="#00ff0f"
